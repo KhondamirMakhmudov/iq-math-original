@@ -73,24 +73,27 @@ const Home = () => {
 
   return (
     <div
-      style={{ backgroundImage: `url(/images/main-bg.jpg)` }}
-      className="bg-center bg-cover bg-no-repeat min-h-screen flex flex-col"
+      style={{ backgroundImage: `url(/images/bg-main-img.png)` }}
+      className="bg-center bg-cover bg-no-repeat min-h-screen flex flex-col font-sf"
     >
       <Header />
       <div className="flex flex-grow items-center justify-center p-4">
-        <div className="w-full max-w-sm md:max-w-md lg:max-w-lg bg-white mx-auto rounded-lg p-6 md:p-8 shadow-lg">
+        <div className="w-full max-w-sm md:max-w-md lg:max-w-[486px] bg-white mx-auto rounded-lg p-6 md:p-8 shadow-lg">
           {!session?.accessToken ? (
             <div className="w-full">
+              <div className="flex items-center justify-center">
+                <Brand />
+              </div>
               {/* Tab Buttons */}
-              <div className="flex">
+              <div className="flex bg-[#F2F2F7] p-[4px] my-[32px] rounded-[8px]">
                 <button
                   onClick={() => {
                     handleTab("login");
                     router.push("/");
                   }}
-                  className={`py-2 px-4 w-1/3 rounded-md text-lg transition-all duration-300 capitalize ${
+                  className={`py-[6px]  rounded-md text-[15px] font-medium   w-1/2 transition-all duration-300 capitalize ${
                     tab === "login"
-                      ? "bg-[#5D87FF] text-white"
+                      ? "bg-white text-black shadow-md"
                       : "text-[#5A6A85] hover:bg-[#ECF2FF]"
                   }`}
                 >
@@ -104,7 +107,7 @@ const Home = () => {
                   }}
                   className={`py-2 px-4 w-2/3 rounded-md transition-all duration-300 ${
                     tab === "register"
-                      ? "bg-[#5D87FF] text-white"
+                      ? "bg-white text-black shadow-md"
                       : "text-[#5A6A85] hover:bg-[#ECF2FF]"
                   }`}
                 >
@@ -113,45 +116,39 @@ const Home = () => {
               </div>
 
               {/* Form Section */}
-              <div className="w-full mt-6">
+              <div className="w-full">
                 <form
                   onSubmit={handleSubmit(onSubmit)}
-                  className="space-y-5 border p-4 rounded-md"
+                  className="space-y-[12px] "
                 >
-                  <div>
-                    <label className="block mb-2 text-sm font-semibold text-[#2A3547]">
+                  <div className="min-h-[46px]">
+                    {/* <label className="block mb-2 text-sm font-semibold text-[#2A3547]">
                       {t("phone number")}
-                    </label>
+                    </label> */}
 
-                    <div className="border border-[#EAEFF4] flex items-center rounded-md px-3 py-2">
-                      <Image
-                        src="/icons/uzb-flag.svg"
-                        alt="flag"
-                        width={30}
-                        height={30}
-                      />
-                      <div className="w-px h-10 bg-[#EAEFF4] mx-2"></div>
-                      <span className="text-gray-700 text-sm">+998</span>
+                    <div className="border border-[#E9E9E9] flex items-center rounded-[12px] px-3 py-2">
+                      <p className="text-[17px] font-medium text-black">+998</p>
+                      <div className="w-px h-[20px] bg-[#59626B] mx-2"></div>
                       <input
                         type="tel"
                         maxLength="9"
                         {...register("phone", { required: true })}
-                        className="w-full bg-white text-sm text-black p-2 focus:outline-none"
-                        placeholder="---------"
+                        className="w-full bg-white text-[17px] text-black  focus:outline-none"
+                        placeholder="Номер телефона"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block mb-2 text-sm font-semibold text-[#2A3547]">
+                    {/* <label className="block mb-2 text-sm font-semibold text-[#2A3547]">
                       {t("password")}
-                    </label>
-                    <div className="relative">
+                    </label> */}
+                    <div className="relative ">
                       <input
                         type={showPassword ? "text" : "password"}
                         {...register("password", { required: true })}
-                        placeholder="********"
-                        className="border border-[#EAEFF4] bg-white rounded-md text-black w-full px-3 py-2 focus:outline-none relative"
+                        placeholder="Введите пароль"
+                        className="border border-[#E9E9E9] bg-white rounded-[12px] text-black w-full px-3 min-h-[46px] focus:outline-none relative"
                       />
                       <div
                         onClick={() => setShowPassword((prev) => !prev)}
@@ -161,15 +158,15 @@ const Home = () => {
                           <Image
                             src={"/icons/eye.svg"}
                             alt={"edit"}
-                            width={18}
-                            height={18}
+                            width={24}
+                            height={24}
                           />
                         ) : (
                           <Image
-                            src={"/icons/eye-closed.svg"}
+                            src={"/icons/eye-off.svg"}
                             alt={"edit"}
-                            width={18}
-                            height={18}
+                            width={24}
+                            height={24}
                           />
                         )}
                       </div>
@@ -200,7 +197,7 @@ const Home = () => {
                   </button>
                 </form>
               </div>
-              {isEmpty(get(banner, "data", [])) ? "" : <Modal />}
+              {/* {isEmpty(get(banner, "data", [])) ? "" : <Modal />} */}
             </div>
           ) : (
             <div className="text-center">

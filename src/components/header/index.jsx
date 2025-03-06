@@ -13,10 +13,11 @@ import useGetQuery from "@/hooks/api/useGetQuery";
 import { get, isEmpty } from "lodash";
 
 const navLinks = [
-  { href: "/about-us", label: "aboutus" },
+  { href: "/", label: "Главная" },
+  { href: "/about-us", label: "О нас" },
   // { href: "https://iqmath.uz/", label: "courses" },
-  { href: "/faq", label: "faq" },
-  { href: "/about-olympics", label: "aboutOlympics" },
+  { href: "/faq", label: "Вопросы и ответы" },
+  { href: "/about-olympics", label: "Об олимпиаде" },
 ];
 
 const Header = ({ color = "white" }) => {
@@ -35,42 +36,44 @@ const Header = ({ color = "white" }) => {
 
   return (
     <header className="relative z-20 py-3 bg-white">
-      <div className="container mx-auto flex justify-between items-center px-4">
-        <Brand />
+      <div className="container mx-auto font-sf flex justify-between items-center px-4">
+        <div className="flex gap-x-[50px]">
+          <Brand />
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex gap-4 items-center">
-          {navLinks.map(({ href, label }) =>
-            href.startsWith("http") ? (
-              <a
-                key={href}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`py-2 px-3 rounded-md hover:text-[#5d87ff] font-medium uppercase text-sm transition ${
-                  router.pathname === href
-                    ? "bg-[#3965c6] text-white"
-                    : "text-black"
-                }`}
-                onClick={() => setMenuOpen(false)}
-              >
-                {t(label)}
-              </a>
-            ) : (
-              <Link
-                key={href}
-                href={href}
-                className={`py-2 px-3 rounded-md hover:text-[#5d87ff] font-medium uppercase text-sm transition ${
-                  router.pathname === href
-                    ? "bg-[#3965c6] text-white hover:text-white"
-                    : "text-black"
-                }`}
-              >
-                {t(label)}
-              </Link>
-            )
-          )}
-        </nav>
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex gap-4 items-center">
+            {navLinks.map(({ href, label }) =>
+              href.startsWith("http") ? (
+                <a
+                  key={href}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`py-2 px-3 rounded-md  font-medium uppercase text-[17px]  transition ${
+                    router.pathname === href
+                      ? "text-[#5D87FF]"
+                      : "text-[#8A8A8E]"
+                  }`}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {t(label)}
+                </a>
+              ) : (
+                <Link
+                  key={href}
+                  href={href}
+                  className={`py-2 px-3 rounded-md  font-medium  text-[17px] transition ${
+                    router.pathname === href
+                      ? "text-[#5D87FF]"
+                      : "text-[#8A8A8E]"
+                  }`}
+                >
+                  {t(label)}
+                </Link>
+              )
+            )}
+          </nav>
+        </div>
 
         {/* Language & Mobile Menu */}
         <div className=" flex items-center ">

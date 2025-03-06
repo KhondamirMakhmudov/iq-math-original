@@ -6,13 +6,14 @@ const Brand = () => {
   const router = useRouter();
   return (
     <div className={"  "}>
-      <Link href={"/"}>
+      <Link href={"/"} className="flex gap-x-[16px] items-center">
+        <Image src={"/icons/brand.svg"} alt="brand" width={34} height={34} />
         <h1
-          className={` font-semibold text-[34px]  text-[#3965c6] font-myriad   ${
+          className={` font-normal text-[32px] font-bicubik text-black font-myriad   ${
             router.pathname === "/" ? "dark:text-[#3965c6]" : "dark:text-white"
           }`}
         >
-          IQ math
+          IQmath
         </h1>
       </Link>
     </div>

@@ -17,6 +17,34 @@ body {
   font-style: normal;
 }
 
+@font-face {
+  font-family: "SF Pro Display";
+  src: url("/fonts/SF-Pro-Display-Regular.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "SF Pro Display";
+  src: url("/fonts/SF-Pro-Display-Bold.otf") format("opentype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "SF Pro Display";
+  src: url("/fonts/SF-Pro-Display-Italic.otf") format("opentype");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Bicubik";
+  src: url("/fonts/Bicubik.OTF") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 [data-theme="dark"] body {
   background: #202936ff;
   color: #fff;
