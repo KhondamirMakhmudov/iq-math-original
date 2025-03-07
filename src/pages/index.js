@@ -72,154 +72,256 @@ const Home = () => {
   });
 
   return (
-    <div
-      style={{ backgroundImage: `url(/images/bg-main-img.png)` }}
-      className="bg-center bg-cover bg-no-repeat min-h-screen flex flex-col font-sf"
-    >
+    <div>
       <Header />
-      <div className="flex flex-grow items-center justify-center p-4">
-        <div className="w-full max-w-sm md:max-w-md lg:max-w-[486px] bg-white mx-auto rounded-lg p-6 md:p-8 shadow-lg">
-          {!session?.accessToken ? (
-            <div className="w-full">
-              <div className="flex items-center justify-center">
-                <Brand />
-              </div>
-              {/* Tab Buttons */}
-              <div className="flex bg-[#F2F2F7] p-[4px] my-[32px] rounded-[8px]">
-                <button
-                  onClick={() => {
-                    handleTab("login");
-                    router.push("/");
-                  }}
-                  className={`py-[6px]  rounded-md text-[15px] font-medium   w-1/2 transition-all duration-300 capitalize ${
-                    tab === "login"
-                      ? "bg-white text-black shadow-md"
-                      : "text-[#5A6A85] hover:bg-[#ECF2FF]"
-                  }`}
-                >
-                  {t("login")}
-                </button>
+      <main>
+        <div
+          style={{ backgroundImage: `url(/images/bg-main-img.png)` }}
+          className="bg-center bg-cover bg-no-repeat min-h-screen flex flex-col font-sf"
+        >
+          <div className="flex flex-grow items-center justify-center p-4">
+            <div className="w-full max-w-sm md:max-w-md lg:max-w-[486px] bg-white mx-auto rounded-lg p-6 md:p-8 shadow-lg">
+              {!session?.accessToken ? (
+                <div className="w-full">
+                  <div className="flex items-center justify-center">
+                    <Brand />
+                  </div>
+                  {/* Tab Buttons */}
+                  <div className="flex bg-[#F2F2F7] p-[4px] my-[32px] rounded-[8px]">
+                    <button
+                      onClick={() => {
+                        handleTab("login");
+                        router.push("/");
+                      }}
+                      className={`py-[6px]  rounded-md text-[15px] font-medium   w-1/2 transition-all duration-300 capitalize ${
+                        tab === "login"
+                          ? "bg-white text-black shadow-md"
+                          : "text-[#5A6A85] hover:bg-[#ECF2FF]"
+                      }`}
+                    >
+                      {t("login")}
+                    </button>
 
-                <button
-                  onClick={() => {
-                    handleTab("register");
-                    router.push("/register");
-                  }}
-                  className={`py-2 px-4 w-2/3 rounded-md transition-all duration-300 ${
-                    tab === "register"
-                      ? "bg-white text-black shadow-md"
-                      : "text-[#5A6A85] hover:bg-[#ECF2FF]"
-                  }`}
-                >
-                  {t("sign in")}
-                </button>
-              </div>
+                    <button
+                      onClick={() => {
+                        handleTab("register");
+                        router.push("/register");
+                      }}
+                      className={`py-2 px-4 w-2/3 rounded-md transition-all duration-300 ${
+                        tab === "register"
+                          ? "bg-white text-black shadow-md"
+                          : "text-[#5A6A85] hover:bg-[#ECF2FF]"
+                      }`}
+                    >
+                      {t("sign in")}
+                    </button>
+                  </div>
 
-              {/* Form Section */}
-              <div className="w-full">
-                <form
-                  onSubmit={handleSubmit(onSubmit)}
-                  className="space-y-[12px] "
-                >
-                  <div className="min-h-[46px]">
-                    {/* <label className="block mb-2 text-sm font-semibold text-[#2A3547]">
+                  {/* Form Section */}
+                  <div className="w-full">
+                    <form
+                      onSubmit={handleSubmit(onSubmit)}
+                      className="space-y-[12px] "
+                    >
+                      <div className="min-h-[46px]">
+                        {/* <label className="block mb-2 text-sm font-semibold text-[#2A3547]">
                       {t("phone number")}
                     </label> */}
 
-                    <div className="border border-[#E9E9E9] flex items-center rounded-[12px] px-3 py-2">
-                      <p className="text-[17px] font-medium text-black">+998</p>
-                      <div className="w-px h-[20px] bg-[#59626B] mx-2"></div>
-                      <input
-                        type="tel"
-                        maxLength="9"
-                        {...register("phone", { required: true })}
-                        className="w-full bg-white text-[17px] text-black  focus:outline-none"
-                        placeholder="Номер телефона"
-                      />
-                    </div>
-                  </div>
+                        <div className="border border-[#E9E9E9] flex items-center rounded-[12px] px-3 py-2">
+                          <p className="text-[17px] font-medium text-black">
+                            +998
+                          </p>
+                          <div className="w-px h-[20px] bg-[#59626B] mx-2"></div>
+                          <input
+                            type="tel"
+                            maxLength="9"
+                            {...register("phone", { required: true })}
+                            className="w-full bg-white text-[17px] text-black  focus:outline-none"
+                            placeholder="Номер телефона"
+                          />
+                        </div>
+                      </div>
 
-                  <div>
-                    {/* <label className="block mb-2 text-sm font-semibold text-[#2A3547]">
+                      <div>
+                        {/* <label className="block mb-2 text-sm font-semibold text-[#2A3547]">
                       {t("password")}
                     </label> */}
-                    <div className="relative ">
-                      <input
-                        type={showPassword ? "text" : "password"}
-                        {...register("password", { required: true })}
-                        placeholder="Введите пароль"
-                        className="border border-[#E9E9E9] bg-white rounded-[12px] text-black w-full px-3 min-h-[46px] focus:outline-none relative"
-                      />
-                      <div
-                        onClick={() => setShowPassword((prev) => !prev)}
-                        className="absolute top-3 right-3 bottom-0 cursor-pointer"
-                      >
-                        {showPassword ? (
-                          <Image
-                            src={"/icons/eye.svg"}
-                            alt={"edit"}
-                            width={24}
-                            height={24}
+                        <div className="relative ">
+                          <input
+                            type={showPassword ? "text" : "password"}
+                            {...register("password", { required: true })}
+                            placeholder="Введите пароль"
+                            className="border border-[#E9E9E9] bg-white rounded-[12px] text-black w-full px-3 min-h-[46px] focus:outline-none relative"
                           />
-                        ) : (
-                          <Image
-                            src={"/icons/eye-off.svg"}
-                            alt={"edit"}
-                            width={24}
-                            height={24}
-                          />
-                        )}
+                          <div
+                            onClick={() => setShowPassword((prev) => !prev)}
+                            className="absolute top-3 right-3 bottom-0 cursor-pointer"
+                          >
+                            {showPassword ? (
+                              <Image
+                                src={"/icons/eye.svg"}
+                                alt={"edit"}
+                                width={24}
+                                height={24}
+                              />
+                            ) : (
+                              <Image
+                                src={"/icons/eye-off.svg"}
+                                alt={"edit"}
+                                width={24}
+                                height={24}
+                              />
+                            )}
+                          </div>
+                        </div>
                       </div>
-                    </div>
+
+                      <div className="flex flex-wrap justify-between items-center mt-4">
+                        <label className="flex items-center space-x-2 text-sm">
+                          <input
+                            type="checkbox"
+                            checked={isChecked}
+                            onChange={handleCheckboxChange}
+                            className="w-4 h-4"
+                          />
+                          <span>{t("remember")}</span>
+                        </label>
+
+                        <Link
+                          href="/auth/forget-password"
+                          className="text-[#5D87FF] font-medium hover:underline transition duration-200"
+                        >
+                          {t("forget password")}
+                        </Link>
+                      </div>
+
+                      <button className="w-full bg-[#5D87FF] hover:bg-[#4570EA] text-white py-2 rounded-md transition-all duration-300">
+                        {t("login")}
+                      </button>
+                    </form>
                   </div>
-
-                  <div className="flex flex-wrap justify-between items-center mt-4">
-                    <label className="flex items-center space-x-2 text-sm">
-                      <input
-                        type="checkbox"
-                        checked={isChecked}
-                        onChange={handleCheckboxChange}
-                        className="w-4 h-4"
-                      />
-                      <span>{t("remember")}</span>
-                    </label>
-
-                    <Link
-                      href="/auth/forget-password"
-                      className="text-[#5D87FF] font-medium hover:underline transition duration-200"
+                  {/* {isEmpty(get(banner, "data", [])) ? "" : <Modal />} */}
+                </div>
+              ) : (
+                <div className="text-center">
+                  <h1 className="text-2xl font-medium mb-5">{t("welcome")}!</h1>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <button
+                      onClick={() => router.push("/dashboard")}
+                      className="bg-[#5D87FF] hover:bg-[#4570EA] py-3 w-full text-white rounded-md transition-all"
                     >
-                      {t("forget password")}
-                    </Link>
+                      {t("enter")}
+                    </button>
+                    <button
+                      onClick={handleLogout}
+                      className="bg-[#FA896B] hover:bg-[#E77F63] py-3 w-full text-white rounded-md transition-all"
+                    >
+                      {t("left")}
+                    </button>
                   </div>
-
-                  <button className="w-full bg-[#5D87FF] hover:bg-[#4570EA] text-white py-2 rounded-md transition-all duration-300">
-                    {t("login")}
-                  </button>
-                </form>
-              </div>
-              {/* {isEmpty(get(banner, "data", [])) ? "" : <Modal />} */}
+                </div>
+              )}
             </div>
-          ) : (
-            <div className="text-center">
-              <h1 className="text-2xl font-medium mb-5">{t("welcome")}!</h1>
-              <div className="flex flex-col sm:flex-row gap-3">
-                <button
-                  onClick={() => router.push("/dashboard")}
-                  className="bg-[#5D87FF] hover:bg-[#4570EA] py-3 w-full text-white rounded-md transition-all"
-                >
-                  {t("enter")}
-                </button>
-                <button
-                  onClick={handleLogout}
-                  className="bg-[#FA896B] hover:bg-[#E77F63] py-3 w-full text-white rounded-md transition-all"
-                >
-                  {t("left")}
-                </button>
-              </div>
-            </div>
-          )}
+          </div>
         </div>
-      </div>
+
+        <section className="bg-[#F5F6F8] py-[120px] font-sf">
+          <div className="container">
+            <h1 className="text-center text-[34px] font-semibold mb-[60px]">
+              Наши преимущества
+            </h1>
+
+            <ul className="grid grid-cols-12 gap-[24px]">
+              <li className="col-span-4 bg-white px-[24px] py-[20px] rounded-[12px] shadow-md">
+                <div className="bg-[#F5F6F8] p-[22px] rounded-full inline-block">
+                  <div className="w-[26px] h-[26px] rounded-full border-[2px] bg-transparent border-[#59626B]"></div>
+                </div>
+
+                <h4 className="text-[24px] font-semibold mt-[16px] mb-[10px]">
+                  Consultation
+                </h4>
+
+                <p className="text-[#8A8A8E] text-[17px]">
+                  Comprehensive evaluation of your business objectives
+                </p>
+              </li>
+
+              <li className="col-span-4 bg-white px-[24px] py-[20px] rounded-[12px] shadow-md">
+                <div className="bg-[#F5F6F8] p-[22px] rounded-full inline-block">
+                  <div className="w-[26px] h-[26px] rounded-full border-[2px] bg-transparent border-[#59626B]"></div>
+                </div>
+
+                <h4 className="text-[24px] font-semibold mt-[16px] mb-[10px]">
+                  Consultation
+                </h4>
+
+                <p className="text-[#8A8A8E] text-[17px]">
+                  Comprehensive evaluation of your business objectives
+                </p>
+              </li>
+
+              <li className="col-span-4 bg-white px-[24px] py-[20px] rounded-[12px] shadow-md">
+                <div className="bg-[#F5F6F8] p-[22px] rounded-full inline-block">
+                  <div className="w-[26px] h-[26px] rounded-full border-[2px] bg-transparent border-[#59626B]"></div>
+                </div>
+
+                <h4 className="text-[24px] font-semibold mt-[16px] mb-[10px]">
+                  Consultation
+                </h4>
+
+                <p className="text-[#8A8A8E] text-[17px]">
+                  Comprehensive evaluation of your business objectives
+                </p>
+              </li>
+
+              <li className="col-span-4 bg-white px-[24px] py-[20px] rounded-[12px] shadow-md">
+                <div className="bg-[#F5F6F8] p-[22px] rounded-full inline-block">
+                  <div className="w-[26px] h-[26px] rounded-full border-[2px] bg-transparent border-[#59626B]"></div>
+                </div>
+
+                <h4 className="text-[24px] font-semibold mt-[16px] mb-[10px]">
+                  Consultation
+                </h4>
+
+                <p className="text-[#8A8A8E] text-[17px]">
+                  Comprehensive evaluation of your business objectives
+                </p>
+              </li>
+
+              <li className="col-span-4 bg-white px-[24px] py-[20px] rounded-[12px] shadow-md">
+                <div className="bg-[#F5F6F8] p-[22px] rounded-full inline-block">
+                  <div className="w-[26px] h-[26px] rounded-full border-[2px] bg-transparent border-[#59626B]"></div>
+                </div>
+
+                <h4 className="text-[24px] font-semibold mt-[16px] mb-[10px]">
+                  Consultation
+                </h4>
+
+                <p className="text-[#8A8A8E] text-[17px]">
+                  Comprehensive evaluation of your business objectives
+                </p>
+              </li>
+
+              <li className="col-span-4 bg-white px-[24px] py-[20px] rounded-[12px] shadow-md">
+                <div className="bg-[#F5F6F8] p-[22px] rounded-full inline-block">
+                  <div className="w-[26px] h-[26px] rounded-full border-[2px] bg-transparent border-[#59626B]"></div>
+                </div>
+
+                <h4 className="text-[24px] font-semibold mt-[16px] mb-[10px]">
+                  Consultation
+                </h4>
+
+                <p className="text-[#8A8A8E] text-[17px]">
+                  Comprehensive evaluation of your business objectives
+                </p>
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section className="bg-white py-[100px] font-sf"></section>
+      </main>
     </div>
   );
 };
