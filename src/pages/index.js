@@ -15,6 +15,7 @@ import useGetQuery from "@/hooks/api/useGetQuery";
 import { KEYS } from "@/constants/key";
 import { URLS } from "@/constants/url";
 import { get, isEmpty } from "lodash";
+import { howItWorks } from "@/dummy-data";
 
 const Home = () => {
   const { data: session } = useSession();
@@ -320,7 +321,47 @@ const Home = () => {
           </div>
         </section>
 
-        <section className="bg-white py-[100px] font-sf"></section>
+        <section className="bg-white py-[100px] font-sf">
+          <div className="grid grid-cols-12 container gap-x-[72px]">
+            <div className="col-span-6">
+              <h3 className="text-[34px] font-semibold ">Как это работает?</h3>
+
+              <p className="text-[19px] text-[#8A8A8E] mt-[24px]">
+                Каждый ученик имеет возможность совершенствовать свои
+                математические знания, выполняя задания. Учащийся выполняет не
+                повторяющиеся задания и видит путь решения неправильно решенных
+                задач – это помогает ребёнку освоить материал и учиться на своих
+                ошибках.
+              </p>
+
+              <div className="px-[25px] py-[40px]">
+                <Image
+                  src={"/images/how-it-works.png"}
+                  alt="how-it-works"
+                  width={513}
+                  height={320}
+                />
+              </div>
+            </div>
+
+            <div className="col-span-6">
+              <ul className="space-y-[32px]">
+                {howItWorks.map((item, index) => (
+                  <li key={index} className="">
+                    <div className="font-semibold flex text-[22px] gap-x-[6px]">
+                      <span>{item.id}.</span>
+                      <h4>{item.title}</h4>
+                    </div>
+
+                    <p className="text-[19px] text-[#8A8A8E]">
+                      {item.description}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
       </main>
     </div>
   );
