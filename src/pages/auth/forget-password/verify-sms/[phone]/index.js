@@ -9,13 +9,25 @@ import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import Header from "@/components/header";
+import { useSearchParams } from "next/navigation";
 
 const Index = () => {
   const { t } = useTranslation();
   const router = useRouter();
   const { phone } = router.query;
+  const [verifyCode, setVerifyCode] = useState("");
   const [code, setCode] = useState(new Array(5).fill(""));
-  const [timer, setTimer] = useState(10);
+  const [timer, setTimer] = useState(20);
+
+  const formatPhoneNumber = (phone) => {
+    if (phone?.length !== 9) return phone; // Noto'g'ri uzunlikda bo'lsa, o'zgartirmaymiz
+    return `+998 (${phone.slice(0, 2)}) ${phone.slice(2, 5)}-${phone.slice(
+      5,
+      7
+    )}-${phone.slice(7, 9)}`;
+  };
+
+  const formattedPhone = formatPhoneNumber(phone);
 
   useEffect(() => {
     // Get saved timestamp from localStorage
@@ -79,7 +91,7 @@ const Index = () => {
         url: URLS.resendSMSCodeForget,
         attributes: {
           phone: parseInt(`998${phone.replace(/[^0-9]/g, "")}`),
-          sms_code: code.join(""),
+          sms_code: verifyCode,
         },
       },
 
@@ -98,22 +110,22 @@ const Index = () => {
     );
   };
 
-  const handleKeyDown = (e, index) => {
-    if (e.key === "Backspace") {
-      const newCode = [...code];
+  // const handleKeyDown = (e, index) => {
+  //   if (e.key === "Backspace") {
+  //     const newCode = [...code];
 
-      if (code[index] !== "") {
-        // Remove the digit from the current input
-        newCode[index] = "";
-        setCode(newCode);
-      } else if (index > 0) {
-        // Move focus to the previous input
-        document.getElementById(`input-${index - 1}`).focus();
-      }
-    }
-  };
+  //     if (code[index] !== "") {
+  //       // Remove the digit from the current input
+  //       newCode[index] = "";
+  //       setCode(newCode);
+  //     } else if (index > 0) {
+  //       // Move focus to the previous input
+  //       document.getElementById(`input-${index - 1}`).focus();
+  //     }
+  //   }
+  // };
 
-  const isCodeComplete = code.every((digit) => digit !== "");
+  // const isCodeComplete = code.every((digit) => digit !== "");
 
   const minutes = Math.floor(timer / 60);
   const seconds = timer % 60;
@@ -127,16 +139,19 @@ const Index = () => {
       style={{ backgroundImage: `url(/images/bg-main-img.png)` }}
     >
       <Header />
-      <div className="flex flex-grow items-center justify-center">
+      <div className="flex flex-grow items-center justify-center font-sf">
         <div className="w-full max-w-sm sm:max-w-md md:max-w-lg bg-white mx-auto rounded-lg p-6 sm:p-8 shadow-md">
-          <p className="text-sm sm:text-base text-center mt-4 sm:mt-6 mb-2 sm:mb-4">
-            {t("enterSMSCode")}
+          <h3 className="font-extrabold text-[26px] text-center">
+            Подтвердите номер телефона
+          </h3>
+          <p className="text-sm sm:text-[19px] font-medium text-center mt-[8px] mb-[32px]">
+            Мы отправили смс на номер <br />
+            {formattedPhone}
           </p>
 
-          <div className="border p-4 sm:p-6 rounded-md">
-            <div className="flex flex-col items-center justify-center">
-              <div className="bg-white p-4 sm:p-6 rounded-lg">
-                <div className="flex justify-center space-x-2 sm:space-x-3 mb-4 sm:mb-6">
+          <div className="flex flex-col  justify-center">
+            <div className=" rounded-lg">
+              {/* <div className="flex justify-center space-x-2 sm:space-x-3 mb-4 sm:mb-6">
                   {code.map((digit, index) => (
                     <input
                       key={index}
@@ -149,19 +164,31 @@ const Index = () => {
                       className="w-10 h-10 sm:w-12 sm:h-12 text-center border border-gray-300 rounded-md shadow-sm text-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     />
                   ))}
+                </div> */}
+              <div className="flex items-center w-full gap-x-[12px] mb-[50px]">
+                <div className="w-full">
+                  <input
+                    type="text"
+                    onChange={(e) => setVerifyCode(e.target.value)}
+                    placeholder="Код из смс"
+                    className="border border-[#E9E9E9] bg-white rounded-[12px] text-black w-full px-3 min-h-[46px] focus:outline-none relative text-[17px] placeholder:text-[17px]"
+                  />
                 </div>
 
-                <div className="flex justify-center items-center mb-4 sm:mb-6">
-                  <hr className="border-t border-gray-300 flex-grow mx-2" />
-                  <span className="text-gray-600 text-xs sm:text-sm">
+                <div className="flex justify-center items-center">
+                  <span className="text-black text-sm sm:text-[22px] py-[9px] px-[27px] border border-[#D1D1D6] rounded-[10px]">
                     {formattedTime}
                   </span>
-                  <hr className="border-t border-gray-300 flex-grow mx-2" />
                 </div>
+              </div>
 
+              <div className="flex gap-x-[16px]">
+                <button className="bg-[#EDEDF2] hover:bg-[#EDEDF2] text-black py-2 sm:py-[13px] w-1/2 rounded-[10px] transition-all duration-300">
+                  {t("back")}
+                </button>
                 <button
                   onClick={onSubmit}
-                  className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 sm:py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 transition-all duration-300"
+                  className=" bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 sm:py-3 w-1/2 rounded-[10px] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 transition-all duration-300"
                 >
                   {t("submit")}
                 </button>
