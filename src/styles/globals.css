@@ -104,6 +104,10 @@ body {
   display: block;
 }
 
+.sidebar-card {
+  background: radial-gradient(circle, #9747ff, #37265a, rgba(20, 0, 62, 0.5));
+}
+
 /* .cursor-custom {
   cursor: url("/images/close-red.png") 9 9, auto;
 }
