@@ -1,7 +1,7 @@
 import Brand from "@/components/brand";
 import Link from "next/link";
 import { useState } from "react";
-
+import ContentLoader from "@/components/loader/content-loader";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
@@ -9,17 +9,21 @@ import Image from "next/image";
 import { signIn, signOut, useSession } from "next-auth/react";
 import LanguageDropdown from "@/components/language";
 import { useTranslation } from "react-i18next";
-
+import parse from "html-react-parser";
 import Header from "@/components/header";
 import useGetQuery from "@/hooks/api/useGetQuery";
 import { KEYS } from "@/constants/key";
 import { URLS } from "@/constants/url";
 import { get, isEmpty } from "lodash";
 import { howItWorks } from "@/dummy-data";
+import { motion } from "framer-motion";
+import Footer from "@/components/footer";
 
 const Home = () => {
+  const { t, i18n } = useTranslation();
   const { data: session } = useSession();
-  const { t } = useTranslation();
+  const [openIndex, setOpenIndex] = useState(null);
+
   const router = useRouter();
   const [tab, setTab] = useState("login");
   const [showPassword, setShowPassword] = useState(false);
@@ -29,6 +33,19 @@ const Home = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  const {
+    data: faqsData,
+    isLoading: isLoadingFAQs,
+    isFetching: isFetchingFAQS,
+  } = useGetQuery({
+    key: KEYS.faqs,
+    url: URLS.faqs,
+  });
+
+  const toggleAccordion = (index) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
 
   const onSubmit = async ({ phone, password }) => {
     const formattedPhone = `998${phone.replace(/[^0-9]/g, "")}`;
@@ -62,15 +79,6 @@ const Home = () => {
     localStorage.clear();
     sessionStorage.clear();
   };
-
-  const {
-    data: banner,
-    isLoading,
-    isFetching,
-  } = useGetQuery({
-    key: KEYS.banner,
-    url: URLS.banner,
-  });
 
   return (
     <div>
@@ -362,7 +370,124 @@ const Home = () => {
             </div>
           </div>
         </section>
+
+        <section className="bg-[#F5F6F8] py-[100px] font-sf">
+          <div className="container">
+            <h1 className="text-center text-[34px] font-semibold mb-[60px]">
+              Подходит для
+            </h1>
+
+            <div className="grid grid-cols-12 gap-x-[24px]">
+              <div className="col-span-4 bg-white p-[24px] rounded-[12px] shadow-md">
+                <div className="bg-[#F5F6F8] p-[22px] inline-block rounded-full">
+                  <Image
+                    src={"/icons/teacher.svg"}
+                    alt="teacher"
+                    width={23}
+                    height={22}
+                  />
+                </div>
+
+                <h4 className="text-[24px] font-semibold">Учителя</h4>
+                <p className="text-[17px] text-[#8A8A8E]">
+                  Comprehensive evaluation of your business objectives
+                </p>
+              </div>
+
+              <div className="col-span-4 bg-white p-[24px] rounded-[12px] shadow-md">
+                <div className="bg-[#F5F6F8] p-[22px] inline-block rounded-full">
+                  <Image
+                    src={"/icons/parents.svg"}
+                    alt="teacher"
+                    width={23}
+                    height={22}
+                  />
+                </div>
+                <h4 className="text-[24px] font-semibold">Родителя</h4>
+                <p className="text-[17px] text-[#8A8A8E]">
+                  Comprehensive evaluation of your business objectives
+                </p>
+              </div>
+
+              <div className="col-span-4 bg-white p-[24px] rounded-[12px] shadow-md">
+                <div className="bg-[#F5F6F8] p-[22px] inline-block rounded-full">
+                  <Image
+                    src={"/icons/pupil.svg"}
+                    alt="teacher"
+                    width={23}
+                    height={22}
+                  />
+                </div>
+
+                <h4 className="text-[24px] font-semibold">Ученика</h4>
+                <p className="text-[17px] text-[#8A8A8E]">
+                  Comprehensive evaluation of your business objectives
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-white py-[100px] font-sf">
+          <div className="container">
+            <h1 className="text-center text-[34px] font-semibold mb-[60px]">
+              FAQ, часто задаваемые вопросы
+            </h1>
+
+            {isLoadingFAQs || isFetchingFAQS ? (
+              <ContentLoader />
+            ) : (
+              get(faqsData, "data").map((faq, index) => (
+                <div key={index} className="border-b border-gray-300">
+                  <button
+                    className="w-full flex justify-between items-center py-[25px] text-left text-[22px] font-semibold hover:bg-gray-100 transition-all duration-300"
+                    onClick={() => toggleAccordion(index)}
+                  >
+                    {i18n.language === "uz"
+                      ? get(faq, "question_uz")
+                      : get(faq, "question_ru")}
+                    {openIndex === index ? (
+                      <Image
+                        src={"/icons/minus.svg"}
+                        alt="plus"
+                        width={28}
+                        height={28}
+                      />
+                    ) : (
+                      <Image
+                        src={"/icons/plus.svg"}
+                        alt="plus"
+                        width={28}
+                        height={28}
+                      />
+                    )}
+                  </button>
+                  {openIndex === index && (
+                    <motion.div
+                      initial={{ opacity: 0, translateY: "30px" }}
+                      animate={{ opacity: 1, translateY: "0px" }}
+                      transition={{ duration: 0.2 }}
+                      className="p-4  text-gray-700"
+                    >
+                      {i18n.language === "uz" ? (
+                        <div className="faq text-[17px] text-[#8A8A8E]">
+                          {parse(get(faq, "answer_uz") || "")}
+                        </div>
+                      ) : (
+                        <div className="faq">
+                          {parse(get(faq, "answer_ru") || "")}
+                        </div>
+                      )}
+                    </motion.div>
+                  )}
+                </div>
+              ))
+            )}
+          </div>
+        </section>
       </main>
+
+      <Footer />
     </div>
   );
 };
