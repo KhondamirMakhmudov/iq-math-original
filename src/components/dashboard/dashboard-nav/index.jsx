@@ -156,10 +156,10 @@ const DashboardNav = () => {
           </div>
         </div>
 
-        <div className="border-t">
+        <div className="border-t ">
           <SidebarTitle>Аккаунт</SidebarTitle>
-          <div className="flex flex-col  justify-between">
-            <ul className="mt-[12px] space-y-[8px] px-[24px]">
+          <div className="flex flex-col justify-between ">
+            <ul className="mt-[12px] space-y-[8px] px-[24px] mb-[24px]">
               <li
                 onClick={() => {
                   handleTab("profile");

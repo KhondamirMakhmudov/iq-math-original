@@ -2,8 +2,10 @@ import ProgressCard from "@/card/progress-card";
 import Dashboard from "@/components/dashboard";
 import ProfileDetails from "@/components/profile-details";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 const Index = () => {
+  const router = useRouter();
   return (
     <Dashboard headerTitle={"Профиль"}>
       <div className="grid grid-cols-12 gap-x-[24px]">
@@ -91,7 +93,10 @@ const Index = () => {
                 </li>
               </ul>
 
-              <button className="border border-[#D1D1D6] flex justify-center items-center p-[12px] gap-x-[8px] rounded-[10px] w-full mt-[8px]">
+              <button
+                onClick={() => router.push("/dashboard/student/profile/1")}
+                className="border border-[#D1D1D6] flex justify-center items-center p-[12px] gap-x-[8px] rounded-[10px] w-full mt-[8px]"
+              >
                 <Image
                   src={`/icons/edit.svg`}
                   alt={`edit`}
