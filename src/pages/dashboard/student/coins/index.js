@@ -1,7 +1,7 @@
 import Dashboard from "@/components/dashboard";
 
 const Index = () => {
-  return <Dashboard>Coins</Dashboard>;
+  return <Dashboard headerTitle={"Баллы"}>Coins</Dashboard>;
 };
 
 export default Index;

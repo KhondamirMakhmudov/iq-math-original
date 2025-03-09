@@ -15,7 +15,7 @@ import { InstagramIcon } from "@/components/icons/social-media/instagram";
 import PhoneIcon from "@/components/icons/social-media/phone";
 import { useTheme } from "next-themes";
 
-const MainContentHead = ({ toggleSidebar }) => {
+const MainContentHead = ({ toggleSidebar, title }) => {
   const { data: session } = useSession();
   const [openProfile, setOpenProfile] = useState(false);
   const router = useRouter();
@@ -99,56 +99,79 @@ const MainContentHead = ({ toggleSidebar }) => {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
-    enabled: !!accessToken, // Only fetch if accessToken is available
+    enabled: !!accessToken,
   });
 
   const handleLogout = async () => {
     await signOut({
-      callbackUrl: "https://iq-math.uz", // Redirect to iq-math.uz after sign out
+      callbackUrl: "https://iq-math.uz",
     });
 
     localStorage.clear();
     sessionStorage.clear();
   };
 
-  // Function to handle showing the modal
   const handleLogoutClick = () => {
     setIsModalOpen(true);
   };
 
-  // Function to handle closing the modal
   const closeModal = () => {
     setIsExiting(true);
     setTimeout(() => {
       setIsModalOpen(false);
       setIsExiting(false);
-    }, 300); // Delay for the animation to complete
+    }, 300);
   };
 
   return (
-    <div className={"flex justify-between"}>
-      <div className={"flex items-center gap-x-[24px]"}>
-        <button onClick={toggleSidebar}>
+    <div className="border-b">
+      <div className={"flex justify-between px-[24px] pt-[24px] pb-[16px]"}>
+        <div className={"flex items-center gap-x-[24px]"}>
+          {/* <button onClick={toggleSidebar}>
           <Image
             src={"/icons/sidebar.svg"}
             alt={"sidebar"}
             width={24}
             height={24}
           />
-        </button>
-
-        {/* <button>
-          <Image
-            src={"/icons/search.svg"}
-            alt={"sidebar"}
-            width={24}
-            height={24}
-          />
         </button> */}
-      </div>
 
-      <div className={"relative flex items-center gap-x-[24px]"}>
-        <div className="hidden lg:flex items-center gap-x-[10px]">
+          <p className="text-[24px] font-semibold text-black">{title}</p>
+        </div>
+
+        <div className={"relative flex items-center gap-x-[16px]"}>
+          <div className="flex gap-x-[8px] items-center py-[7px] px-[12px] border border-[#E9E9E9] rounded-[12px]">
+            <Image
+              src={"/icons/coins-logo.svg"}
+              alt="coins-logo"
+              width={26}
+              height={26}
+            />
+
+            <p className="text-[19px] font-medium">808 баллов</p>
+          </div>
+
+          <LanguageDropdown />
+
+          <div className="scale-100 active:scale-110 transition-all duration-300 p-[6px] cursor-pointer">
+            <Image
+              src={"/icons/bell.svg"}
+              alt="coins-logo"
+              width={26}
+              height={26}
+            />
+          </div>
+
+          <button onClick={handleProfile}>
+            <Image
+              src={"/images/avatar.png"}
+              alt={"user"}
+              width={40}
+              height={40}
+            />
+          </button>
+
+          {/* <div className="hidden lg:flex items-center gap-x-[10px]">
           {isEmpty(get(networkings, "data", []))
             ? ""
             : get(networkings, "data", []).map((networking, index) => (
@@ -169,15 +192,15 @@ const MainContentHead = ({ toggleSidebar }) => {
                   )}
                 </div>
               ))}
-        </div>
-        <LanguageDropdown />
-        {/* <ThemeChanger /> */}
+        </div> */}
 
-        <button onClick={handleProfile}>
+          {/* <ThemeChanger /> */}
+
+          {/* <button onClick={handleProfile}>
           <Image src={"/images/user.png"} alt={"user"} width={42} height={42} />
-        </button>
+        </button> */}
 
-        {openProfile && (
+          {/* {openProfile && (
           <div
             ref={profileRef}
             className="absolute bg-white dark:bg-[#26334A] border rounded-md  min-w-[300px] -bottom-[300px] shadow-lg -left-[130px] p-[30px] z-50"
@@ -242,8 +265,8 @@ const MainContentHead = ({ toggleSidebar }) => {
               {t("logout")}
             </button>
           </div>
-        )}
-
+        )} */}
+          {/* 
         {isModalOpen && (
           <>
             <div
@@ -278,7 +301,8 @@ const MainContentHead = ({ toggleSidebar }) => {
               </div>
             </div>
           </>
-        )}
+        )} */}
+        </div>
       </div>
     </div>
   );

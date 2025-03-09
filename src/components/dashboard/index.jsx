@@ -6,7 +6,7 @@ import Sidebar from "./sidebar";
 import MainContent from "./main";
 import { useRouter } from "next/router";
 
-const Dashboard = ({ children }) => {
+const Dashboard = ({ children, headerTitle }) => {
   const router = useRouter();
   const [isSidebarOpen, setIsSidebarOpen] = useState(null); // Boshlang‘ich holat yo‘q
 
@@ -49,6 +49,7 @@ const Dashboard = ({ children }) => {
         </Sidebar>
 
         <MainContent
+          headTitle={headerTitle}
           isSidebarOpen={isSidebarOpen}
           setIsSidebarOpen={setIsSidebarOpen}
         >

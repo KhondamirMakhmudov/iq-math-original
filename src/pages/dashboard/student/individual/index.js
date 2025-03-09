@@ -1,7 +1,7 @@
 import Dashboard from "@/components/dashboard";
 
 const Index = () => {
-  return <Dashboard>Individual</Dashboard>;
+  return <Dashboard headerTitle={"Самостоятельные"}>Individual</Dashboard>;
 };
 
 export default Index;
