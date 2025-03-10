@@ -4,10 +4,12 @@ import RightIcon from "@/components/icons/right";
 
 const Index = () => {
   const [showDropdownMain, setShowDropdownMain] = useState(false);
+  const [showDropdownMail, setShowDropdownMail] = useState(false);
+  const [showDropdownPassword, setShowDropdownPassword] = useState(false);
   return (
     <Dashboard headerTitle={"Личные данные"}>
       <div className="grid grid-cols-12 gap-[24px] font-sf">
-        <div className="col-span-6 ">
+        <div className="col-span-6 space-y-[12px]">
           {/* Main infos */}
           <div className="border py-[17px] px-[24px] rounded-[12px]">
             <div
@@ -66,6 +68,83 @@ const Index = () => {
                       placeholder=""
                       className="border border-[#E9E9E9] rounded-[8px] w-full py-[10px] px-[16px] font-medium"
                       value={"12/02/2002"}
+                    />
+                  </div>
+                </form>
+              </div>
+            )}
+          </div>
+
+          <div className="border py-[17px] px-[24px] rounded-[12px]">
+            <div
+              onClick={() => setShowDropdownMail(!showDropdownMail)}
+              className="flex justify-between items-center cursor-pointer"
+            >
+              <h4 className="font-medium text-[17px]">Изменить email-адрес</h4>
+              <button>
+                <RightIcon
+                  classname={`${
+                    !showDropdownMail ? "rotate-90" : "-rotate-90"
+                  } transition-all duration-200`}
+                  color="#BCBFC2"
+                />
+              </button>
+            </div>
+
+            {showDropdownMail && (
+              <div>
+                <div className="w-full h-[1px] bg-[#E9E9E9] my-[16px]"></div>
+
+                <form className="space-y-[24px]">
+                  <div>
+                    <p className="text-[15px] mb-[8px]">
+                      Новый email-адрес{" "}
+                      <span className="text-[#FF3B30] ">*</span>
+                    </p>
+
+                    <input
+                      type="email"
+                      placeholder=""
+                      className="border border-[#E9E9E9] rounded-[8px] w-full py-[10px] px-[16px] font-medium"
+                      value={"Dilshod Suyunov"}
+                    />
+                  </div>
+                </form>
+              </div>
+            )}
+          </div>
+
+          <div className="border py-[17px] px-[24px] rounded-[12px]">
+            <div
+              onClick={() => setShowDropdownPassword(!showDropdownPassword)}
+              className="flex justify-between items-center cursor-pointer"
+            >
+              <h4 className="font-medium text-[17px]">Изменить пароль</h4>
+              <button>
+                <RightIcon
+                  classname={`${
+                    !showDropdownPassword ? "rotate-90" : "-rotate-90"
+                  } transition-all duration-200`}
+                  color="#BCBFC2"
+                />
+              </button>
+            </div>
+
+            {showDropdownPassword && (
+              <div>
+                <div className="w-full h-[1px] bg-[#E9E9E9] my-[16px]"></div>
+
+                <form className="space-y-[24px]">
+                  <div>
+                    <p className="text-[15px] mb-[8px]">
+                      Новый пароль
+                      <span className="text-[#FF3B30] ">*</span>
+                    </p>
+
+                    <input
+                      type="password"
+                      placeholder=""
+                      className="border border-[#E9E9E9] rounded-[8px] w-full py-[10px] px-[16px] font-medium"
                     />
                   </div>
                 </form>
