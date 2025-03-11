@@ -18,12 +18,12 @@ import { get, isEmpty } from "lodash";
 import { howItWorks } from "@/dummy-data";
 import { motion } from "framer-motion";
 import Footer from "@/components/footer";
-
+import SimpleLoader from "@/components/loader/simple-loader";
 const Home = () => {
   const { t, i18n } = useTranslation();
   const { data: session } = useSession();
   const [openIndex, setOpenIndex] = useState(null);
-
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const [tab, setTab] = useState("login");
   const [showPassword, setShowPassword] = useState(false);
@@ -48,6 +48,7 @@ const Home = () => {
   };
 
   const onSubmit = async ({ phone, password }) => {
+    setIsLoading(true);
     const formattedPhone = `998${phone.replace(/[^0-9]/g, "")}`;
     const result = await signIn("credentials", {
       phone: formattedPhone,
@@ -61,6 +62,8 @@ const Home = () => {
       toast.success("Logged in successfully");
       router.push("/dashboard/student");
     }
+
+    setIsLoading(false);
   };
 
   const handleTab = (tab) => {
@@ -205,8 +208,15 @@ const Home = () => {
                         </Link>
                       </div>
 
-                      <button className="w-full bg-[#5D87FF] hover:bg-[#4570EA] text-white py-2 rounded-md transition-all duration-300">
-                        {t("login")}
+                      <button
+                        disabled={isLoading}
+                        className={`w-full ${
+                          isLoading
+                            ? "bg-[#8D97B2]"
+                            : "bg-[#5D87FF] hover:bg-[#4570EA]"
+                        } text-white py-2 rounded-md transition-all duration-300`}
+                      >
+                        {isLoading ? <SimpleLoader /> : t("login")}
                       </button>
                     </form>
                   </div>
