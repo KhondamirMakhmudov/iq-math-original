@@ -274,7 +274,10 @@ const DashboardNav = () => {
             </ul>
 
             <div className="border-t px-[24px] py-[24px] !text-white">
-              <div className="sidebar-card p-[16px] rounded-[16px]">
+              <div
+                className=" p-[16px] rounded-[16px] bg-no-repeat bg-cover bg-center"
+                style={{ backgroundImage: `url(/images/bg-img.png)` }}
+              >
                 <h3 className="text-[13px] font-medium">Тарифный план</h3>
 
                 <p className="text-[24px] font-semibold my-[12px]">

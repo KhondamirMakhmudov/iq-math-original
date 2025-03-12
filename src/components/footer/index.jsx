@@ -7,10 +7,10 @@ const Footer = () => {
   return (
     <footer className="border-t font-sf">
       <div className="container">
-        <div className="pt-[24px] flex gap-x-[50px]">
+        <div className="pt-[24px] flex gap-x-[50px] flex-wrap">
           <Brand />
-          <ul className="flex gap-x-[24px] items-center">
-            <li className="flex gap-x-[12px] items-center">
+          <ul className="flex gap-[24px] items-center flex-wrap">
+            <li className="flex gap-[12px] items-center">
               <Image
                 src={"/icons/phone.svg"}
                 alt="phone"
@@ -62,8 +62,8 @@ const Footer = () => {
 
         <div className="w-full h-[1px] bg-[#E9E9E9] my-[24px]"></div>
 
-        <div className="py-[9px] flex justify-between">
-          <ul className="flex items-center gap-x-[24px] text-[15px] ">
+        <div className="py-[9px] flex justify-between flex-wrap">
+          <ul className="flex flex-wrap items-center gap-[24px] text-[15px] ">
             <li>
               <p>© 2025 iqmath.com</p>
             </li>

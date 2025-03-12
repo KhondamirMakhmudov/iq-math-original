@@ -11,7 +11,7 @@ import { KEYS } from "@/constants/key";
 import { URLS } from "@/constants/url";
 import useGetQuery from "@/hooks/api/useGetQuery";
 import { get, isEmpty } from "lodash";
-
+import Image from "next/image";
 const navLinks = [
   { href: "/", label: "Главная" },
   { href: "/about-us", label: "О нас" },
@@ -41,7 +41,7 @@ const Header = ({ color = "white" }) => {
           <Brand />
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex gap-4 items-center">
+          <nav className="hidden lg:flex gap-4 items-center">
             {navLinks.map(({ href, label }) =>
               href.startsWith("http") ? (
                 <a
@@ -76,8 +76,8 @@ const Header = ({ color = "white" }) => {
         </div>
 
         {/* Language & Mobile Menu */}
-        <div className=" flex items-center ">
-          <div className="hidden lg:flex items-center gap-x-[10px]">
+        <div className=" flex items-center lg:gap-x-[32px]">
+          {/* <div className="hidden lg:flex items-center gap-x-[10px]">
             {isEmpty(get(networkings, "data", []))
               ? ""
               : get(networkings, "data", []).map((networking, index) => (
@@ -98,7 +98,7 @@ const Header = ({ color = "white" }) => {
                     )}
                   </div>
                 ))}
-          </div>
+          </div> */}
           {/* <div className="hidden lg:flex gap-x-[10px] items-center">
             <a href="tel: +998 78 888 08 00" className="text-sm">
               <PhoneIcon className="text-black hover:text-[#5d87ff]" />
@@ -111,12 +111,28 @@ const Header = ({ color = "white" }) => {
             </a>
           </div> */}
 
-          <div className="w-[1px] h-[30px] bg-[#E6E5ED] hidden lg:block mx-[10px]"></div>
+          {/* <div className="w-[1px] h-[30px] bg-[#E6E5ED] hidden lg:block mx-[10px]"></div> */}
           <LanguageDropdown />
+
+          <div className="hidden lg:flex items-center gap-x-[10px]">
+            <Image
+              src={"/icons/phone.svg"}
+              alt="phone"
+              width={24}
+              height={24}
+            />
+
+            <a
+              className="text-[15px] font-medium text-black"
+              href="tel:+998 88 198 90 00"
+            >
+              +998 88 198 90 00
+            </a>
+          </div>
 
           {/* Burger Menu Button */}
           <button
-            className="ml-4 md:hidden p-2 rounded-md transition hover:bg-gray-200"
+            className="ml-4 lg:hidden p-2 rounded-md transition hover:bg-gray-200"
             onClick={() => setMenuOpen(!menuOpen)}
           >
             {menuOpen ? (

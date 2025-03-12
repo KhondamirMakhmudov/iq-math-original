@@ -19,6 +19,7 @@ import { howItWorks } from "@/dummy-data";
 import { motion } from "framer-motion";
 import Footer from "@/components/footer";
 import SimpleLoader from "@/components/loader/simple-loader";
+import ScrollToTopButton from "@/components/scroll-to-top";
 const Home = () => {
   const { t, i18n } = useTranslation();
   const { data: session } = useSession();
@@ -87,6 +88,7 @@ const Home = () => {
     <div>
       <Header />
       <main>
+        <ScrollToTopButton />
         <div
           style={{ backgroundImage: `url(/images/bg-main-img.png)` }}
           className="bg-center bg-cover bg-no-repeat min-h-screen flex flex-col font-sf"
@@ -228,13 +230,13 @@ const Home = () => {
                   <div className="flex flex-col sm:flex-row gap-3">
                     <button
                       onClick={() => router.push("/dashboard")}
-                      className="bg-[#5D87FF] hover:bg-[#4570EA] py-3 w-full text-white rounded-md transition-all"
+                      className="bg-[#5D87FF] hover:bg-[#4570EA] py-3  w-1/2 text-white rounded-md transition-all"
                     >
                       {t("enter")}
                     </button>
                     <button
                       onClick={handleLogout}
-                      className="bg-[#FA896B] hover:bg-[#E77F63] py-3 w-full text-white rounded-md transition-all"
+                      className="bg-[#EDEDF2] hover:bg-gray-200 hover:bg-[#EDEDF2] text-black py-2 sm:py-[13px] w-1/2 rounded-[10px] transition-all duration-300"
                     >
                       {t("left")}
                     </button>
@@ -252,7 +254,7 @@ const Home = () => {
             </h1>
 
             <ul className="grid grid-cols-12 gap-[24px]">
-              <li className="col-span-4 bg-white px-[24px] py-[20px] rounded-[12px] shadow-md">
+              <li className="col-span-12 md:col-span-6 lg:col-span-4 bg-white px-[24px] py-[20px] rounded-[12px] shadow-md">
                 <div className="bg-[#F5F6F8] p-[22px] rounded-full inline-block">
                   <div className="w-[26px] h-[26px] rounded-full border-[2px] bg-transparent border-[#59626B]"></div>
                 </div>
@@ -266,7 +268,7 @@ const Home = () => {
                 </p>
               </li>
 
-              <li className="col-span-4 bg-white px-[24px] py-[20px] rounded-[12px] shadow-md">
+              <li className="col-span-12 md:col-span-6 lg:col-span-4 bg-white px-[24px] py-[20px] rounded-[12px] shadow-md">
                 <div className="bg-[#F5F6F8] p-[22px] rounded-full inline-block">
                   <div className="w-[26px] h-[26px] rounded-full border-[2px] bg-transparent border-[#59626B]"></div>
                 </div>
@@ -280,7 +282,7 @@ const Home = () => {
                 </p>
               </li>
 
-              <li className="col-span-4 bg-white px-[24px] py-[20px] rounded-[12px] shadow-md">
+              <li className="col-span-12 md:col-span-6 lg:col-span-4 bg-white px-[24px] py-[20px] rounded-[12px] shadow-md">
                 <div className="bg-[#F5F6F8] p-[22px] rounded-full inline-block">
                   <div className="w-[26px] h-[26px] rounded-full border-[2px] bg-transparent border-[#59626B]"></div>
                 </div>
@@ -294,7 +296,7 @@ const Home = () => {
                 </p>
               </li>
 
-              <li className="col-span-4 bg-white px-[24px] py-[20px] rounded-[12px] shadow-md">
+              <li className="col-span-12 md:col-span-6 lg:col-span-4 bg-white px-[24px] py-[20px] rounded-[12px] shadow-md">
                 <div className="bg-[#F5F6F8] p-[22px] rounded-full inline-block">
                   <div className="w-[26px] h-[26px] rounded-full border-[2px] bg-transparent border-[#59626B]"></div>
                 </div>
@@ -308,7 +310,7 @@ const Home = () => {
                 </p>
               </li>
 
-              <li className="col-span-4 bg-white px-[24px] py-[20px] rounded-[12px] shadow-md">
+              <li className="col-span-12 md:col-span-6 lg:col-span-4 bg-white px-[24px] py-[20px] rounded-[12px] shadow-md">
                 <div className="bg-[#F5F6F8] p-[22px] rounded-full inline-block">
                   <div className="w-[26px] h-[26px] rounded-full border-[2px] bg-transparent border-[#59626B]"></div>
                 </div>
@@ -322,7 +324,7 @@ const Home = () => {
                 </p>
               </li>
 
-              <li className="col-span-4 bg-white px-[24px] py-[20px] rounded-[12px] shadow-md">
+              <li className="col-span-12 md:col-span-6 lg:col-span-4 bg-white px-[24px] py-[20px] rounded-[12px] shadow-md">
                 <div className="bg-[#F5F6F8] p-[22px] rounded-full inline-block">
                   <div className="w-[26px] h-[26px] rounded-full border-[2px] bg-transparent border-[#59626B]"></div>
                 </div>
@@ -339,44 +341,51 @@ const Home = () => {
           </div>
         </section>
 
-        <section className="bg-white py-[100px] font-sf">
-          <div className="grid grid-cols-12 container gap-x-[72px]">
-            <div className="col-span-6">
-              <h3 className="text-[34px] font-semibold ">Как это работает?</h3>
+        <section className="bg-white py-[100px] font-sf ">
+          <div className="container px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-6 lg:gap-x-[72px]">
+              {/* Chap taraf (sarlavha, paragraf va rasm) */}
+              <div className="col-span-12 lg:col-span-6">
+                <h3 className="text-[28px] md:text-[32px] lg:text-[34px] font-semibold">
+                  Как это работает?
+                </h3>
 
-              <p className="text-[19px] text-[#8A8A8E] mt-[24px]">
-                Каждый ученик имеет возможность совершенствовать свои
-                математические знания, выполняя задания. Учащийся выполняет не
-                повторяющиеся задания и видит путь решения неправильно решенных
-                задач – это помогает ребёнку освоить материал и учиться на своих
-                ошибках.
-              </p>
+                <p className="text-[16px] md:text-[18px] lg:text-[19px] text-[#8A8A8E] mt-4">
+                  Каждый ученик имеет возможность совершенствовать свои
+                  математические знания, выполняя задания. Учащийся выполняет не
+                  повторяющиеся задания и видит путь решения неправильно
+                  решенных задач – это помогает ребёнку освоить материал и
+                  учиться на своих ошибках.
+                </p>
 
-              <div className="px-[25px] py-[40px]">
-                <Image
-                  src={"/images/how-it-works.png"}
-                  alt="how-it-works"
-                  width={513}
-                  height={320}
-                />
+                <div className="px-4 sm:px-6 md:px-8 py-6 md:py-8 lg:py-[40px]">
+                  <Image
+                    src={"/images/how-it-works.png"}
+                    alt="how-it-works"
+                    width={513}
+                    height={320}
+                    className="w-full max-w-[400px] md:max-w-[500px] lg:max-w-[513px] mx-auto"
+                  />
+                </div>
               </div>
-            </div>
 
-            <div className="col-span-6">
-              <ul className="space-y-[32px]">
-                {howItWorks.map((item, index) => (
-                  <li key={index} className="">
-                    <div className="font-semibold flex text-[22px] gap-x-[6px]">
-                      <span>{item.id}.</span>
-                      <h4>{item.title}</h4>
-                    </div>
+              {/* O'ng taraf (Ro‘yxat) */}
+              <div className="col-span-12 lg:col-span-6">
+                <ul className="space-y-4 md:space-y-6 lg:space-y-[32px]">
+                  {howItWorks.map((item, index) => (
+                    <li key={index} className="">
+                      <div className="font-semibold flex text-[18px] md:text-[20px] lg:text-[22px] gap-x-[6px]">
+                        <span>{item.id}.</span>
+                        <h4>{item.title}</h4>
+                      </div>
 
-                    <p className="text-[19px] text-[#8A8A8E]">
-                      {item.description}
-                    </p>
-                  </li>
-                ))}
-              </ul>
+                      <p className="text-[16px] md:text-[18px] lg:text-[19px] text-[#8A8A8E]">
+                        {item.description}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
         </section>
@@ -387,8 +396,8 @@ const Home = () => {
               Подходит для
             </h1>
 
-            <div className="grid grid-cols-12 gap-x-[24px]">
-              <div className="col-span-4 bg-white p-[24px] rounded-[12px] shadow-md">
+            <div className="grid grid-cols-12 gap-[24px]">
+              <div className="col-span-12 md:col-span-6 lg:col-span-4 bg-white p-[24px] rounded-[12px] shadow-md">
                 <div className="bg-[#F5F6F8] p-[22px] inline-block rounded-full">
                   <Image
                     src={"/icons/teacher.svg"}
@@ -402,13 +411,62 @@ const Home = () => {
                 <p className="text-[17px] text-[#8A8A8E]">
                   Comprehensive evaluation of your business objectives
                 </p>
+
+                <ul className="mt-[24px] space-y-[20px]">
+                  <li>
+                    <div className="flex justify-between items-start gap-x-[16px]">
+                      <Image
+                        src={"/icons/checked.svg"}
+                        alt="checked"
+                        width={28}
+                        height={28}
+                      />
+
+                      <p className="text-[15px]">
+                        Сразу получает результаты заданий и контрольных работ
+                      </p>
+                    </div>
+                  </li>
+
+                  <li>
+                    <div className="flex justify-between items-start gap-x-[16px]">
+                      <Image
+                        src={"/icons/checked.svg"}
+                        alt="checked"
+                        width={28}
+                        height={28}
+                      />
+
+                      <p className="text-[15px]">
+                        Имеется возможность проведения контрольной работы для
+                        отдельного ученика или класса
+                      </p>
+                    </div>
+                  </li>
+
+                  <li>
+                    <div className="flex justify-between items-start gap-x-[16px]">
+                      <Image
+                        src={"/icons/checked.svg"}
+                        alt="checked"
+                        width={28}
+                        height={28}
+                      />
+
+                      <p className="text-[15px]">
+                        Доступна информация о неправильных решенных задачах ,
+                        тем, показателей знаний каждого учащегося
+                      </p>
+                    </div>
+                  </li>
+                </ul>
               </div>
 
-              <div className="col-span-4 bg-white p-[24px] rounded-[12px] shadow-md">
+              <div className="col-span-12 md:col-span-6 lg:col-span-4 bg-white p-[24px] rounded-[12px] shadow-md">
                 <div className="bg-[#F5F6F8] p-[22px] inline-block rounded-full">
                   <Image
                     src={"/icons/parents.svg"}
-                    alt="teacher"
+                    alt="parents"
                     width={23}
                     height={22}
                   />
@@ -417,13 +475,62 @@ const Home = () => {
                 <p className="text-[17px] text-[#8A8A8E]">
                   Comprehensive evaluation of your business objectives
                 </p>
+
+                <ul className="mt-[24px] space-y-[20px]">
+                  <li>
+                    <div className="flex justify-between items-start gap-x-[16px]">
+                      <Image
+                        src={"/icons/checked.svg"}
+                        alt="checked"
+                        width={28}
+                        height={28}
+                      />
+
+                      <p className="text-[15px]">
+                        Сразу получает результаты заданий и контрольных работ
+                      </p>
+                    </div>
+                  </li>
+
+                  <li>
+                    <div className="flex justify-between items-start gap-x-[16px]">
+                      <Image
+                        src={"/icons/checked.svg"}
+                        alt="checked"
+                        width={28}
+                        height={28}
+                      />
+
+                      <p className="text-[15px]">
+                        Имеется возможность проведения контрольной работы для
+                        отдельного ученика или класса
+                      </p>
+                    </div>
+                  </li>
+
+                  <li>
+                    <div className="flex justify-between items-start gap-x-[16px]">
+                      <Image
+                        src={"/icons/checked.svg"}
+                        alt="checked"
+                        width={28}
+                        height={28}
+                      />
+
+                      <p className="text-[15px]">
+                        Доступна информация о неправильных решенных задачах ,
+                        тем, показателей знаний каждого учащегося
+                      </p>
+                    </div>
+                  </li>
+                </ul>
               </div>
 
-              <div className="col-span-4 bg-white p-[24px] rounded-[12px] shadow-md">
+              <div className="col-span-12 md:col-span-6 lg:col-span-4 bg-white p-[24px] rounded-[12px] shadow-md">
                 <div className="bg-[#F5F6F8] p-[22px] inline-block rounded-full">
                   <Image
                     src={"/icons/pupil.svg"}
-                    alt="teacher"
+                    alt="pupil"
                     width={23}
                     height={22}
                   />
@@ -433,6 +540,55 @@ const Home = () => {
                 <p className="text-[17px] text-[#8A8A8E]">
                   Comprehensive evaluation of your business objectives
                 </p>
+
+                <ul className="mt-[24px] space-y-[20px]">
+                  <li>
+                    <div className="flex justify-between items-start gap-x-[16px]">
+                      <Image
+                        src={"/icons/checked.svg"}
+                        alt="checked"
+                        width={28}
+                        height={28}
+                      />
+
+                      <p className="text-[15px]">
+                        Сразу получает результаты заданий и контрольных работ
+                      </p>
+                    </div>
+                  </li>
+
+                  <li>
+                    <div className="flex justify-between items-start gap-x-[16px]">
+                      <Image
+                        src={"/icons/checked.svg"}
+                        alt="checked"
+                        width={28}
+                        height={28}
+                      />
+
+                      <p className="text-[15px]">
+                        Имеется возможность проведения контрольной работы для
+                        отдельного ученика или класса
+                      </p>
+                    </div>
+                  </li>
+
+                  <li>
+                    <div className="flex justify-between items-start gap-x-[16px]">
+                      <Image
+                        src={"/icons/checked.svg"}
+                        alt="checked"
+                        width={28}
+                        height={28}
+                      />
+
+                      <p className="text-[15px]">
+                        Доступна информация о неправильных решенных задачах ,
+                        тем, показателей знаний каждого учащегося
+                      </p>
+                    </div>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
@@ -450,7 +606,7 @@ const Home = () => {
               get(faqsData, "data").map((faq, index) => (
                 <div key={index} className="border-b border-gray-300">
                   <button
-                    className="w-full flex justify-between items-center py-[25px] text-left text-[22px] font-semibold hover:bg-gray-100 transition-all duration-300"
+                    className="w-full flex justify-between items-center py-[25px] text-left text-base md:text-lg lg:text-[22px] font-semibold hover:bg-gray-100 transition-all duration-300"
                     onClick={() => toggleAccordion(index)}
                   >
                     {i18n.language === "uz"
