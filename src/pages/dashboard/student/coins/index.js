@@ -4,6 +4,20 @@ import CoinsIcon from "@/components/icons/coins";
 import Image from "next/image";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+
+const items = [
+  { img: "t-shirt", title: "Футболка с принтом", coin: "50" },
+  { img: "phone", title: "Смартфон", coin: "50" },
+  { img: "noutbook", title: "Ноутбук", coin: "50" },
+  { img: "bag", title: "Сумка", coin: "50" },
+  { img: "noutbook", title: "Сумка", coin: "50" },
+  { img: "bag", title: "Сумка", coin: "50" },
+  { img: "phone", title: "Сумка", coin: "50" },
+];
 
 const Index = () => {
   const { t } = useTranslation();
@@ -70,40 +84,34 @@ const Index = () => {
             Доступные призы
           </h1>
 
-          <ul className="grid grid-cols-12 gap-[24px]">
-            <li className="col-span-3 bg-[#F5F6F8] border border-[#E9E9E9] pt-[5px] px-[16px] pb-[16px] rounded-[12px]">
-              <PresentCard
-                img={"t-shirt"}
-                title={"Футболка с принтом"}
-                coin={"50"}
-                onclick={handleOpenModal}
-              />
-            </li>
-
-            <li className="col-span-3 bg-[#F5F6F8] border border-[#E9E9E9] pt-[5px] px-[16px] pb-[16px] rounded-[12px]">
-              <PresentCard
-                img={"phone"}
-                title={"Футболка с принтом"}
-                coin={"50"}
-              />
-            </li>
-
-            <li className="col-span-3 bg-[#F5F6F8] border border-[#E9E9E9] pt-[5px] px-[16px] pb-[16px] rounded-[12px]">
-              <PresentCard
-                img={"noutbook"}
-                title={"Футболка с принтом"}
-                coin={"50"}
-              />
-            </li>
-
-            <li className="col-span-3 bg-[#F5F6F8] border border-[#E9E9E9] pt-[5px] px-[16px] pb-[16px] rounded-[12px]">
-              <PresentCard
-                img={"bag"}
-                title={"Футболка с принтом"}
-                coin={"50"}
-              />
-            </li>
-          </ul>
+          <div className="relative">
+            <Swiper
+              spaceBetween={24}
+              navigation={true}
+              modules={[Navigation]}
+              breakpoints={{
+                0: { slidesPerView: 1 },
+                768: { slidesPerView: 2 },
+                1024: { slidesPerView: 3 },
+                1440: { slidesPerView: 4 },
+              }}
+              loop={true}
+              className="present-swiper"
+            >
+              {items.map((item, index) => (
+                <SwiperSlide key={index}>
+                  <div className="bg-[#F5F6F8] border border-[#E9E9E9] pt-[5px] px-[16px] pb-[16px] rounded-[12px]">
+                    <PresentCard
+                      img={item.img}
+                      title={item.title}
+                      coin={item.coin}
+                      onclick={index === 0 ? handleOpenModal : undefined}
+                    />
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
         </div>
       </div>
 
