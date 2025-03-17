@@ -5,6 +5,8 @@ const MainContent = ({
   isSidebarOpen,
   setIsSidebarOpen,
   headTitle,
+  tab,
+  handleTab,
 }) => {
   return (
     <div
@@ -15,6 +17,8 @@ const MainContent = ({
       <MainContentHead
         toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
         title={headTitle}
+        tab={tab}
+        handleTab={handleTab}
       />
       <div className="p-[24px]">{children}</div>
     </div>

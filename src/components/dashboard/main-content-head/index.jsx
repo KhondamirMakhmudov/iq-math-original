@@ -15,8 +15,9 @@ import { InstagramIcon } from "@/components/icons/social-media/instagram";
 import PhoneIcon from "@/components/icons/social-media/phone";
 import { useTheme } from "next-themes";
 
-const MainContentHead = ({ toggleSidebar, title }) => {
+const MainContentHead = ({ toggleSidebar, title, handleTab, tab }) => {
   const { data: session } = useSession();
+  // const [tab, setTab] = useState("active");
   const [openProfile, setOpenProfile] = useState(false);
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,14 +28,18 @@ const MainContentHead = ({ toggleSidebar, title }) => {
 
   const [accessToken, setAccessToken] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const {
-    data: networkings,
-    isLoadingNetworkings,
-    isFetchingNetworkings,
-  } = useGetQuery({
-    key: KEYS.networkings,
-    url: URLS.networkings,
-  });
+
+  // const handleTab = (tab) => {
+  //   setTab(tab);
+  // };
+  // const {
+  //   data: networkings,
+  //   isLoadingNetworkings,
+  //   isFetchingNetworkings,
+  // } = useGetQuery({
+  //   key: KEYS.networkings,
+  //   url: URLS.networkings,
+  // });
 
   const handleProfile = () => {
     setOpenProfile(!openProfile);
@@ -57,37 +62,37 @@ const MainContentHead = ({ toggleSidebar, title }) => {
     };
   }, [openProfile]);
 
-  useEffect(() => {
-    const storedData = localStorage.getItem("dataRegister");
-    const hasModalBeenShown = localStorage.getItem("modalShown");
+  // useEffect(() => {
+  //   const storedData = localStorage.getItem("dataRegister");
+  //   const hasModalBeenShown = localStorage.getItem("modalShown");
 
-    if (storedData) {
-      try {
-        const parsedData = JSON.parse(storedData);
+  //   if (storedData) {
+  //     try {
+  //       const parsedData = JSON.parse(storedData);
 
-        setUserData(parsedData);
+  //       setUserData(parsedData);
 
-        const tokenFromDataRegister = get(parsedData, "data.access_token");
-        if (tokenFromDataRegister) {
-          setAccessToken(tokenFromDataRegister);
-        }
+  //       const tokenFromDataRegister = get(parsedData, "data.access_token");
+  //       if (tokenFromDataRegister) {
+  //         setAccessToken(tokenFromDataRegister);
+  //       }
 
-        if (!hasModalBeenShown) {
-          setShowModal(true);
-          localStorage.setItem("modalShown", "true");
-        }
-      } catch (error) {
-        console.error("Error parsing JSON from localStorage:", error);
-      }
-    }
-  }, []);
+  //       if (!hasModalBeenShown) {
+  //         setShowModal(true);
+  //         localStorage.setItem("modalShown", "true");
+  //       }
+  //     } catch (error) {
+  //       console.error("Error parsing JSON from localStorage:", error);
+  //     }
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    if (session?.accessToken) {
-      setAccessToken(session.accessToken);
-      localStorage.removeItem("dataRegister");
-    }
-  }, [session]);
+  // useEffect(() => {
+  //   if (session?.accessToken) {
+  //     setAccessToken(session.accessToken);
+  //     localStorage.removeItem("dataRegister");
+  //   }
+  // }, [session]);
 
   const {
     data: studentProfile,
@@ -126,7 +131,7 @@ const MainContentHead = ({ toggleSidebar, title }) => {
   return (
     <div className="border-b">
       <div className={"flex justify-between px-[24px] pt-[24px] pb-[16px]"}>
-        <div className={"flex items-center gap-x-[24px]"}>
+        <div className={"flex items-center gap-x-[24px] flex-1"}>
           {/* <button onClick={toggleSidebar}>
           <Image
             src={"/icons/sidebar.svg"}
@@ -136,7 +141,37 @@ const MainContentHead = ({ toggleSidebar, title }) => {
           />
         </button> */}
 
-          <p className="text-[24px] font-semibold text-black">{title}</p>
+          <p className="text-[24px]  font-semibold text-black">{title}</p>
+
+          {router.pathname === "/dashboard/student/my-study" && (
+            <div className="flex bg-[#F2F2F7] p-[4px] max-w-[223px] w-full rounded-[8px]">
+              <button
+                onClick={() => {
+                  handleTab("active");
+                }}
+                className={`py-[6px]  rounded-md text-[15px] font-medium   w-1/2 transition-all duration-300 capitalize ${
+                  tab === "active"
+                    ? "bg-white text-black shadow-md"
+                    : "text-[#5A6A85] hover:bg-[#ECF2FF]"
+                }`}
+              >
+                Активные
+              </button>
+
+              <button
+                onClick={() => {
+                  handleTab("frozen");
+                }}
+                className={`py-2 px-4 w-2/3 rounded-md transition-all duration-300 ${
+                  tab === "frozen"
+                    ? "bg-white text-black shadow-md"
+                    : "text-[#5A6A85] hover:bg-[#ECF2FF]"
+                }`}
+              >
+                Замароженные
+              </button>
+            </div>
+          )}
         </div>
 
         <div className={"relative flex items-center gap-x-[16px]"}>

@@ -6,7 +6,7 @@ import Sidebar from "./sidebar";
 import MainContent from "./main";
 import { useRouter } from "next/router";
 
-const Dashboard = ({ children, headerTitle }) => {
+const Dashboard = ({ children, headerTitle, tab, handleTab }) => {
   const router = useRouter();
   const [isSidebarOpen, setIsSidebarOpen] = useState(null); // Boshlang‘ich holat yo‘q
 
@@ -29,7 +29,7 @@ const Dashboard = ({ children, headerTitle }) => {
 
   useEffect(() => {
     if (window.innerWidth < 1024) {
-      setIsSidebarOpen(false); // Faqat mobil ekranlarda yopilsin
+      setIsSidebarOpen(false);
     }
   }, [router.pathname]);
 
@@ -52,6 +52,8 @@ const Dashboard = ({ children, headerTitle }) => {
           headTitle={headerTitle}
           isSidebarOpen={isSidebarOpen}
           setIsSidebarOpen={setIsSidebarOpen}
+          tab={tab}
+          handleTab={handleTab}
         >
           {children}
         </MainContent>

@@ -164,3 +164,33 @@ img {
   background-color: white;
   z-index: 1;
 }
+
+.custom-grid {
+  border: none;
+  font-family: "Bicubik";
+}
+
+.custom-grid .ag-header {
+  color: #000 !important;
+  font-family: "SF Pro Display";
+  font-size: 17px;
+  font-weight: normal !important;
+  border: none;
+  text-align: center;
+}
+
+.custom-grid .ag-cell {
+  padding: 10px;
+  font-size: 14px;
+  color: #1e293b;
+  font-family: "SF Pro Display";
+  text-align: center;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+
+.custom-grid .ag-row:hover {
+  background-color: #e2e8f0 !important;
+}
