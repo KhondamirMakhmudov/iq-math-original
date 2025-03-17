@@ -3,51 +3,13 @@
 import React, { useState } from "react";
 import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
-import RightIcon from "../icons/right";
 import Pagination from "../pagination";
 
-// AG Grid modullarini ro'yxatdan o'tkazish
 ModuleRegistry.registerModules([AllCommunityModule]);
 
-const GridExample = () => {
+const GridExample = ({ rowData = [], colDefs = [] }) => {
   const [pageSize, setPageSize] = useState(10);
   const [currentPage, setCurrentPage] = useState(0);
-  const generateRandomData = (count) => {
-    const getRandomNumber = (min, max) =>
-      Math.floor(Math.random() * (max - min + 1)) + min;
-    const getRandomDate = () => {
-      const day = getRandomNumber(1, 31).toString().padStart(2, "0");
-      const month = getRandomNumber(1, 12).toString().padStart(2, "0");
-      const year = getRandomNumber(2020, 2025);
-      const hour = getRandomNumber(0, 23).toString().padStart(2, "0");
-      const minute = getRandomNumber(0, 59).toString().padStart(2, "0");
-      return `${hour}:${minute}, ${day}.${month}.${year}`;
-    };
-
-    return Array.from({ length: count }, (_, index) => ({
-      id: (index + 1).toString().padStart(2, "0"),
-      startTime: getRandomDate(),
-      endTime: getRandomDate(),
-      value: getRandomNumber(10, 50),
-      progress: getRandomNumber(0, 100) + "%",
-      rating: getRandomNumber(1, 5),
-      stars: "⭐".repeat(getRandomNumber(1, 5)),
-      ratio: `${getRandomNumber(1, 5)}/5`,
-      action: "Продолжить",
-    }));
-  };
-
-  const rowData = generateRandomData(50);
-
-  // Ustunlar ta'rifi
-  const colDefs = [
-    { headerName: "№", field: "id", width: 80 },
-    { headerName: "Дата начала", field: "startTime", flex: 1 },
-    { headerName: "Дата  завершения", field: "endTime", flex: 1 },
-    { headerName: "Задачи", field: "value" },
-    { headerName: "Прогресс", field: "progress", flex: 1 },
-    { headerName: "Прогресс", field: "stars", flex: 1 },
-  ];
 
   const handlePageChange = ({ selected }) => {
     setCurrentPage(selected);
