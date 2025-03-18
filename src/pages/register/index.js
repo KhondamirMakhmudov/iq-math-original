@@ -326,96 +326,203 @@ const Register = () => {
           </div>
 
           <div className="w-full mt-[30px]">
-            {showPage ? (
-              <form
-                onSubmit={handleSubmit(onSubmit)}
-                className="space-y-[10px] text-[17px]  rounded-[4px]"
-              >
-                {/* Ism */}
-                <div className="">
-                  <input
-                    type="text"
-                    {...register("full_name", { required: true })}
-                    className="border border-[#EAEFF4] bg-white  text-[#2A3547] rounded-[12px] w-full px-[16px] py-[10px]"
-                    placeholder={`${t("full name")}`}
-                  />
-                </div>
-                {/* Email */}
-                <div>
-                  <input
-                    type="email"
-                    {...register("email", { required: "Email is required" })}
-                    className="border border-[#EAEFF4] bg-white text-[#2A3547]  rounded-[12px] w-full px-[16px] py-[10px]"
-                    placeholder={`${t("email")}`}
-                  />
-                  {submitError?.email && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {submitError.email}
-                    </p>
-                  )}
-                </div>
-                {/* Telefon raqam */}
-                <div>
-                  <div className="border border-[#EAEFF4] flex gap-x-[10px] items-center rounded-[12px] px-[16px] ">
-                    <p className=" font-medium text-black">+998</p>
-                    <div className="w-px h-[20px] bg-[#59626B] mx-2"></div>
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="space-y-[10px] text-[17px]  rounded-[4px]"
+            >
+              {/* Ism */}
+              <div className="">
+                <input
+                  type="text"
+                  {...register("full_name", { required: true })}
+                  className="border border-[#EAEFF4] bg-white  text-[#2A3547] rounded-[12px] w-full px-[16px] py-[10px]"
+                  placeholder={`${t("full name")}`}
+                />
+              </div>
+              {/* Email */}
+              <div>
+                <input
+                  type="email"
+                  {...register("email", { required: "Email is required" })}
+                  className="border border-[#EAEFF4] bg-white text-[#2A3547]  rounded-[12px] w-full px-[16px] py-[10px]"
+                  placeholder={`${t("email")}`}
+                />
+                {submitError?.email && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {submitError.email}
+                  </p>
+                )}
+              </div>
+              {/* Telefon raqam */}
+              <div>
+                <div className="border border-[#EAEFF4] flex gap-x-[10px] items-center rounded-[12px] px-[16px] ">
+                  <p className=" font-medium text-black">+998</p>
+                  <div className="w-px h-[20px] bg-[#59626B] mx-2"></div>
 
+                  <input
+                    type="tel"
+                    maxLength="9"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    {...register("phone", {
+                      required: "Phone number is required",
+                      pattern: {
+                        value: /^[0-9]+$/,
+                        message: "Only numbers are allowed",
+                      },
+                    })}
+                    onInput={(e) =>
+                      (e.target.value = e.target.value.replace(/\D/g, ""))
+                    }
+                    className="w-full  bg-white text-[#2A3547] py-[10px]  focus:outline-none placeholder:font-normal"
+                    placeholder="Номер телефона"
+                  />
+                </div>
+                {submitError?.phone && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {submitError.phone}
+                  </p>
+                )}
+              </div>
+              {/* Birthday */}
+              <div className="w-full cursor-pointer">
+                <DatePicker
+                  selected={date}
+                  onChange={(date) => setDate(date)}
+                  dateFormat="dd.MM.yyyy"
+                  placeholderText={`${t("birthday")}`}
+                  className="border px-[16px] py-[10px]  rounded-[12px] w-full !bg-white"
+                  minDate={new Date(2004, 12, 1)}
+                  maxDate={new Date(2010, 11, 31)}
+                  showYearDropdown
+                  scrollableYearDropdown
+                  yearDropdownItemNumber={6}
+                  showMonthDropdown
+                  wrapperClassName="w-full"
+                />
+              </div>
+
+              {/* Passport yoki guvohnoma */}
+
+              <div className="relative text-[#2A3547] cursor-pointer">
+                <div
+                  onClick={() => setDropdownSelectedDocument((prev) => !prev)}
+                  className={`w-full  px-[16px] py-[10px] border border-[#EAEFF4] ${selectedDocument} rounded-[12px] bg-white focus:outline-none flex items-center justify-between`}
+                >
+                  <span>
+                    {selectedDocument || `${t("selectTypeOfPassport")}`}
+                  </span>
+                  <svg
+                    className={`w-5 h-5 transform ${
+                      dropdownselectedDocument ? "rotate-180" : ""
+                    }`}
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </div>
+
+                {dropdownselectedDocument && (
+                  <ul className="absolute w-full mt-1 bg-white text-[#2A3547] border border-gray-300 rounded-md shadow-md z-10">
+                    {optionDocument.map((option, index) => (
+                      <li
+                        key={index}
+                        className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                        onClick={() => handleSelectedDocument(option)}
+                      >
+                        {t(option)}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+
+              {selectedDocument === null ? (
+                ""
+              ) : (
+                <motion.div
+                  initial={{ opacity: 0, translateY: "30px" }}
+                  animate={{ opacity: 1, translateY: "0px" }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <div className="flex gap-x-[5px]">
                     <input
-                      type="tel"
-                      maxLength="9"
-                      inputMode="numeric"
-                      pattern="[0-9]*"
-                      {...register("phone", {
-                        required: "Phone number is required",
+                      type="text"
+                      maxLength={2}
+                      {...register("documentPrefix", {
+                        required: "To'ldirilishi shart",
                         pattern: {
-                          value: /^[0-9]+$/,
-                          message: "Only numbers are allowed",
+                          value: /^[A-Z]{2}$/,
+                          message: "Ikkita katta harf bo'lishi kerak",
                         },
                       })}
-                      onInput={(e) =>
-                        (e.target.value = e.target.value.replace(/\D/g, ""))
+                      onChange={(e) => {
+                        const value = e.target.value
+                          .toUpperCase()
+                          .replace(/[^A-Z]/g, ""); // Convert to uppercase & remove non-letters
+                        setValue("documentPrefix", value); // Update field value
+                      }}
+                      className="border border-[#EAEFF4] bg-white text-[#2A3547] rounded-[12px] w-16 px-3 py-2 text-center"
+                      placeholder="AB"
+                    />
+
+                    {/* Number (5462312) Input */}
+                    <input
+                      type="text"
+                      maxLength={7}
+                      {...register("documentNumber", {
+                        required: "To'ldirilishi shart",
+                        pattern: {
+                          value: /^[0-9]{7}$/,
+                          message: "7 ta raqam bo'lishi kerak",
+                        },
+                      })}
+                      onInput={(e) => {
+                        e.target.value = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+                      }}
+                      onChange={(e) =>
+                        setValue(
+                          "document",
+                          (watch("documentPrefix") || "") + e.target.value
+                        )
                       }
-                      className="w-full  bg-white text-[#2A3547] py-[10px]  focus:outline-none placeholder:font-normal"
-                      placeholder="Номер телефона"
+                      className="border border-[#EAEFF4] bg-white text-[#2A3547] rounded-[12px] w-full px-3 py-2"
+                      placeholder="1234567"
                     />
                   </div>
-                  {submitError?.phone && (
+
+                  {errors.documentPrefix && (
                     <p className="text-red-500 text-sm mt-1">
-                      {submitError.phone}
+                      {errors.documentPrefix.message}
                     </p>
                   )}
-                </div>
-                {/* Birthday */}
-                <div className="w-full cursor-pointer">
-                  <DatePicker
-                    selected={date}
-                    onChange={(date) => setDate(date)}
-                    dateFormat="dd.MM.yyyy"
-                    placeholderText={`${t("birthday")}`}
-                    className="border px-[16px] py-[10px]  rounded-[12px] w-full !bg-white"
-                    minDate={new Date(2004, 12, 1)}
-                    maxDate={new Date(2010, 11, 31)}
-                    showYearDropdown
-                    scrollableYearDropdown
-                    yearDropdownItemNumber={6}
-                    showMonthDropdown
-                    wrapperClassName="w-full"
-                  />
-                </div>
 
-                {/* Passport yoki guvohnoma */}
+                  {errors.documentNumber && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.documentNumber.message}
+                    </p>
+                  )}
+                </motion.div>
+              )}
 
-                <div className="relative text-[#2A3547] cursor-pointer">
+              <div className="space-y-4 text-[#2A3547]">
+                <div className="relative">
                   <div
-                    onClick={() => setDropdownSelectedDocument((prev) => !prev)}
-                    className={`w-full  px-[16px] py-[10px] border border-[#EAEFF4] ${selectedDocument} rounded-[12px] bg-white focus:outline-none flex items-center justify-between`}
+                    onClick={() => setRegionDropdownOpen((prev) => !prev)}
+                    className="w-full  border border-[#EAEFF4] px-[16px] py-[10px] rounded-[12px] bg-white cursor-pointer flex justify-between items-center"
                   >
-                    <span>
-                      {selectedDocument || `${t("selectTypeOfPassport")}`}
-                    </span>
+                    <p className="text-[#2A3547]">{selectedRegionName}</p>
                     <svg
-                      className={`w-5 h-5 transform ${
-                        dropdownselectedDocument ? "rotate-180" : ""
+                      className={`w-5 h-5 transform duration-200 ${
+                        regionDropdownOpen ? "rotate-180" : ""
                       }`}
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -430,100 +537,43 @@ const Register = () => {
                       />
                     </svg>
                   </div>
-
-                  {dropdownselectedDocument && (
-                    <ul className="absolute w-full mt-1 bg-white text-[#2A3547] border border-gray-300 rounded-md shadow-md z-10">
-                      {optionDocument.map((option, index) => (
-                        <li
-                          key={index}
-                          className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                          onClick={() => handleSelectedDocument(option)}
+                  {regionDropdownOpen && (
+                    <div className="absolute z-50 -top-[410px] mt-1 w-full bg-white border h-[400px] overflow-y-scroll rounded-[12px] shadow-md">
+                      {regions.map((region) => (
+                        <div
+                          key={region.id}
+                          className="px-4 py-2 hover:bg-gray-100 text-[#2A3547] cursor-pointer"
+                          onClick={() => handleRegionSelect(region.id)}
                         >
-                          {t(option)}
-                        </li>
+                          {region.name}
+                        </div>
                       ))}
-                    </ul>
+                    </div>
                   )}
                 </div>
 
-                {selectedDocument === null ? (
+                {selectedRegion === null ? (
                   ""
                 ) : (
                   <motion.div
                     initial={{ opacity: 0, translateY: "30px" }}
                     animate={{ opacity: 1, translateY: "0px" }}
-                    transition={{ duration: 0.2 }}
+                    transition={{ duration: 0.3 }}
+                    className="relative text-[#2A3547]"
                   >
-                    <div className="flex gap-x-[5px]">
-                      <input
-                        type="text"
-                        maxLength={2}
-                        {...register("documentPrefix", {
-                          required: "To'ldirilishi shart",
-                          pattern: {
-                            value: /^[A-Z]{2}$/,
-                            message: "Ikkita katta harf bo'lishi kerak",
-                          },
-                        })}
-                        onChange={(e) => {
-                          const value = e.target.value
-                            .toUpperCase()
-                            .replace(/[^A-Z]/g, ""); // Convert to uppercase & remove non-letters
-                          setValue("documentPrefix", value); // Update field value
-                        }}
-                        className="border border-[#EAEFF4] bg-white text-[#2A3547] rounded-[12px] w-16 px-3 py-2 text-center"
-                        placeholder="AB"
-                      />
-
-                      {/* Number (5462312) Input */}
-                      <input
-                        type="text"
-                        maxLength={7}
-                        {...register("documentNumber", {
-                          required: "To'ldirilishi shart",
-                          pattern: {
-                            value: /^[0-9]{7}$/,
-                            message: "7 ta raqam bo'lishi kerak",
-                          },
-                        })}
-                        onInput={(e) => {
-                          e.target.value = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
-                        }}
-                        onChange={(e) =>
-                          setValue(
-                            "document",
-                            (watch("documentPrefix") || "") + e.target.value
-                          )
-                        }
-                        className="border border-[#EAEFF4] bg-white text-[#2A3547] rounded-[12px] w-full px-3 py-2"
-                        placeholder="1234567"
-                      />
-                    </div>
-
-                    {errors.documentPrefix && (
-                      <p className="text-red-500 text-sm mt-1">
-                        {errors.documentPrefix.message}
-                      </p>
-                    )}
-
-                    {errors.documentNumber && (
-                      <p className="text-red-500 text-sm mt-1">
-                        {errors.documentNumber.message}
-                      </p>
-                    )}
-                  </motion.div>
-                )}
-
-                <div className="space-y-4 text-[#2A3547]">
-                  <div className="relative">
                     <div
-                      onClick={() => setRegionDropdownOpen((prev) => !prev)}
-                      className="w-full  border border-[#EAEFF4] px-[16px] py-[10px] rounded-[12px] bg-white cursor-pointer flex justify-between items-center"
+                      onClick={toggleDistrictDropdown}
+                      className={`w-full  border border-[#EAEFF4] px-[16px] py-[10px] rounded-[12px] bg-white flex justify-between items-center ${
+                        !filteredDistricts.length ? "cursor-not-allowed" : ""
+                      }`}
+                      disabled={!filteredDistricts.length}
                     >
-                      <p className="text-[#2A3547]">{selectedRegionName}</p>
+                      <p className="text-[text-[#2A3547]]">
+                        {selectedDistrictName}
+                      </p>
                       <svg
                         className={`w-5 h-5 transform duration-200 ${
-                          regionDropdownOpen ? "rotate-180" : ""
+                          districtDropdownOpen ? "rotate-180" : ""
                         }`}
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -538,93 +588,161 @@ const Register = () => {
                         />
                       </svg>
                     </div>
-                    {regionDropdownOpen && (
-                      <div className="absolute z-50 -top-[410px] mt-1 w-full bg-white border h-[400px] overflow-y-scroll rounded-[12px] shadow-md">
-                        {regions.map((region) => (
+                    {districtDropdownOpen && (
+                      <div className="absolute z-10 mt-1 w-full bg-white border rounded-md shadow-md max-h-60 overflow-y-auto">
+                        {filteredDistricts.map((district) => (
                           <div
-                            key={region.id}
+                            key={district.id}
                             className="px-4 py-2 hover:bg-gray-100 text-[#2A3547] cursor-pointer"
-                            onClick={() => handleRegionSelect(region.id)}
+                            onClick={() => handleDistrictSelect(district.id)}
                           >
-                            {region.name}
+                            {district.name}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </motion.div>
+                )}
+              </div>
+              {/* Manzil */}
+              <div className="">
+                <input
+                  type="text"
+                  {...register("address", { required: true })}
+                  className="border border-[#EAEFF4] bg-white text-[#2A3547] rounded-[12px] w-full px-[16px] py-[10px]"
+                  placeholder={`${t("address")}`}
+                />
+              </div>
+
+              {/* Ta'lim dargohi */}
+              <div className="relative text-[#2A3547] cursor-pointer">
+                <div
+                  onClick={() => setDropdownOpen((prev) => !prev)}
+                  className="w-full  px-[16px] py-[10px] border border-[#EAEFF4] text-[#2A3547] rounded-[12px] bg-white focus:outline-none flex items-center justify-between"
+                >
+                  <span>{selectedOption || `${t("chooseEducation")}`}</span>
+                  <svg
+                    className={`w-5 h-5 transform ${
+                      dropdownOpen ? "rotate-180" : ""
+                    }`}
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </div>
+
+                {dropdownOpen && (
+                  <ul className="absolute w-full mt-1 bg-white text-[#2A3547] border border-gray-300 rounded-md shadow-md z-10">
+                    {options.map((option, index) => (
+                      <li
+                        key={index}
+                        className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                        onClick={() => handleOptionSelect(option)}
+                      >
+                        {option}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+
+              <div>
+                {selectedOption === `${t("school")}` ? (
+                  <input
+                    type="text"
+                    placeholder={`${t("schoolNumber")}`}
+                    {...register("academy_or_school_name", {
+                      required: true,
+                    })}
+                    className="border border-[#EAEFF4] bg-white text-[#2A3547] rounded-[12px] w-full px-[16px] py-[10px]"
+                  />
+                ) : selectedOption === `${t("litsey")}` ? (
+                  <div className="relative w-full">
+                    <input
+                      type="text"
+                      value={selectedAcademicLyseums || ""}
+                      {...register("academy_or_school_name", {
+                        required: true,
+                      })}
+                      className="hidden"
+                    />
+                    <div
+                      className="border border-[#EAEFF4] bg-white text-[#2A3547] flex justify-between items-center rounded-[12px] cursor-pointer w-full px-[16px] py-[10px]"
+                      onClick={() =>
+                        setOpenAcademicLyseums(!openAcademicLyseums)
+                      }
+                    >
+                      <span>
+                        {selectedAcademicLyseums || `${t("litseyName")}`}
+                      </span>
+                      <svg
+                        className={`w-5 h-5 transform ${
+                          dropdownOpen ? "rotate-180" : ""
+                        }`}
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M19 9l-7 7-7-7"
+                        />
+                      </svg>
+                    </div>
+                    {openAcademicLyseums && (
+                      <div className="absolute mt-1 w-full bg-white border shadow-md max-h-60 overflow-y-auto rounded-md z-50">
+                        {academic.map((lyceum, index) => (
+                          <div
+                            key={index}
+                            className="p-2 hover:bg-gray-200 cursor-pointer"
+                            onClick={() => {
+                              setSelectedAcademicLyseums(lyceum);
+                              setOpenAcademicLyseums(false);
+                              setValue("academy_or_school_name", lyceum);
+                            }}
+                          >
+                            {lyceum}
                           </div>
                         ))}
                       </div>
                     )}
                   </div>
+                ) : (
+                  ""
+                )}
+              </div>
 
-                  {selectedRegion === null ? (
-                    ""
-                  ) : (
-                    <motion.div
-                      initial={{ opacity: 0, translateY: "30px" }}
-                      animate={{ opacity: 1, translateY: "0px" }}
-                      transition={{ duration: 0.3 }}
-                      className="relative text-[#2A3547]"
-                    >
-                      <div
-                        onClick={toggleDistrictDropdown}
-                        className={`w-full  border border-[#EAEFF4] px-[16px] py-[10px] rounded-[12px] bg-white flex justify-between items-center ${
-                          !filteredDistricts.length ? "cursor-not-allowed" : ""
-                        }`}
-                        disabled={!filteredDistricts.length}
-                      >
-                        <p className="text-[text-[#2A3547]]">
-                          {selectedDistrictName}
-                        </p>
-                        <svg
-                          className={`w-5 h-5 transform duration-200 ${
-                            districtDropdownOpen ? "rotate-180" : ""
-                          }`}
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M19 9l-7 7-7-7"
-                          />
-                        </svg>
-                      </div>
-                      {districtDropdownOpen && (
-                        <div className="absolute z-10 mt-1 w-full bg-white border rounded-md shadow-md max-h-60 overflow-y-auto">
-                          {filteredDistricts.map((district) => (
-                            <div
-                              key={district.id}
-                              className="px-4 py-2 hover:bg-gray-100 text-[#2A3547] cursor-pointer"
-                              onClick={() => handleDistrictSelect(district.id)}
-                            >
-                              {district.name}
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </motion.div>
-                  )}
-                </div>
-                {/* Manzil */}
-                <div className="">
-                  <input
-                    type="text"
-                    {...register("address", { required: true })}
-                    className="border border-[#EAEFF4] bg-white text-[#2A3547] rounded-[12px] w-full px-[16px] py-[10px]"
-                    placeholder={`${t("address")}`}
-                  />
-                </div>
-
-                {/* Ta'lim dargohi */}
-                <div className="relative text-[#2A3547] cursor-pointer">
+              {(selectedOption === `${t("litsey")}` &&
+                selectedAcademicLyseums) ||
+              (selectedOption === `${t("school")}` &&
+                !!watch("academy_or_school_name")) ? (
+                <motion.div
+                  initial={{ opacity: 0, translateY: "30px" }}
+                  animate={{ opacity: 1, translateY: "0px" }}
+                  transition={{ duration: 0.3 }}
+                  className="relative text-[#2A3547] cursor-pointer"
+                >
                   <div
-                    onClick={() => setDropdownOpen((prev) => !prev)}
-                    className="w-full  px-[16px] py-[10px] border border-[#EAEFF4] text-[#2A3547] rounded-[12px] bg-white focus:outline-none flex items-center justify-between"
+                    onClick={() => setDropdownOpenCourse((prev) => !prev)}
+                    className="w-full text-left px-[16px] py-[10px] border border-[#EAEFF4] rounded-[12px] bg-white focus:outline-none flex items-center justify-between"
                   >
-                    <span>{selectedOption || `${t("chooseEducation")}`}</span>
+                    <span>
+                      {selectedOptionCourse || `${t("chooseTypeOfClass")}`}
+                    </span>
                     <svg
                       className={`w-5 h-5 transform ${
-                        dropdownOpen ? "rotate-180" : ""
+                        dropdownOpenCourse ? "rotate-180" : ""
                       }`}
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -640,234 +758,83 @@ const Register = () => {
                     </svg>
                   </div>
 
-                  {dropdownOpen && (
-                    <ul className="absolute w-full mt-1 bg-white text-[#2A3547] border border-gray-300 rounded-md shadow-md z-10">
-                      {options.map((option, index) => (
+                  {/* Dropdown options */}
+                  {dropdownOpenCourse && (
+                    <ul className="absolute w-full -top-[90px] bg-white border border-gray-300 rounded-md shadow-md z-50">
+                      {filteredCourses.map((option, index) => (
                         <li
                           key={index}
                           className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                          onClick={() => handleOptionSelect(option)}
+                          onClick={() => handleCourseSelect(option)}
                         >
-                          {option}
+                          {option.name}
                         </li>
                       ))}
                     </ul>
                   )}
-                </div>
+                </motion.div>
+              ) : null}
 
-                <div>
-                  {selectedOption === `${t("school")}` ? (
-                    <input
-                      type="text"
-                      placeholder={`${t("schoolNumber")}`}
-                      {...register("academy_or_school_name", {
-                        required: true,
-                      })}
-                      className="border border-[#EAEFF4] bg-white text-[#2A3547] rounded-[12px] w-full px-[16px] py-[10px]"
-                    />
-                  ) : selectedOption === `${t("litsey")}` ? (
-                    <div className="relative w-full">
-                      <input
-                        type="text"
-                        value={selectedAcademicLyseums || ""}
-                        {...register("academy_or_school_name", {
-                          required: true,
-                        })}
-                        className="hidden"
-                      />
-                      <div
-                        className="border border-[#EAEFF4] bg-white text-[#2A3547] flex justify-between items-center rounded-[12px] cursor-pointer w-full px-[16px] py-[10px]"
-                        onClick={() =>
-                          setOpenAcademicLyseums(!openAcademicLyseums)
-                        }
-                      >
-                        <span>
-                          {selectedAcademicLyseums || `${t("litseyName")}`}
-                        </span>
-                        <svg
-                          className={`w-5 h-5 transform ${
-                            dropdownOpen ? "rotate-180" : ""
-                          }`}
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M19 9l-7 7-7-7"
-                          />
-                        </svg>
-                      </div>
-                      {openAcademicLyseums && (
-                        <div className="absolute mt-1 w-full bg-white border shadow-md max-h-60 overflow-y-auto rounded-md z-50">
-                          {academic.map((lyceum, index) => (
-                            <div
-                              key={index}
-                              className="p-2 hover:bg-gray-200 cursor-pointer"
-                              onClick={() => {
-                                setSelectedAcademicLyseums(lyceum);
-                                setOpenAcademicLyseums(false);
-                                setValue("academy_or_school_name", lyceum);
-                              }}
-                            >
-                              {lyceum}
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  ) : (
-                    ""
-                  )}
-                </div>
+              {/* Ta'lim turi */}
 
-                {(selectedOption === `${t("litsey")}` &&
-                  selectedAcademicLyseums) ||
-                (selectedOption === `${t("school")}` &&
-                  !!watch("academy_or_school_name")) ? (
-                  <motion.div
-                    initial={{ opacity: 0, translateY: "30px" }}
-                    animate={{ opacity: 1, translateY: "0px" }}
-                    transition={{ duration: 0.3 }}
-                    className="relative text-[#2A3547] cursor-pointer"
-                  >
-                    <div
-                      onClick={() => setDropdownOpenCourse((prev) => !prev)}
-                      className="w-full text-left px-[16px] py-[10px] border border-[#EAEFF4] rounded-[12px] bg-white focus:outline-none flex items-center justify-between"
-                    >
-                      <span>
-                        {selectedOptionCourse || `${t("chooseTypeOfClass")}`}
-                      </span>
-                      <svg
-                        className={`w-5 h-5 transform ${
-                          dropdownOpenCourse ? "rotate-180" : ""
-                        }`}
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M19 9l-7 7-7-7"
-                        />
-                      </svg>
-                    </div>
-
-                    {/* Dropdown options */}
-                    {dropdownOpenCourse && (
-                      <ul className="absolute w-full -top-[90px] bg-white border border-gray-300 rounded-md shadow-md z-50">
-                        {filteredCourses.map((option, index) => (
-                          <li
-                            key={index}
-                            className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                            onClick={() => handleCourseSelect(option)}
-                          >
-                            {option.name}
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </motion.div>
-                ) : null}
-
-                {/* Ta'lim turi */}
-
-                <div className="relative w-full">
-                  {/* Tanlangan ta'lim turi yoki default "Ta'lim turi" */}
-                  <div
-                    onClick={() => setOpenTypeOfEducation(!openTypeOfEducation)}
-                    className="w-full flex items-center justify-between cursor-pointer px-[16px] py-[10px] border border-[#EAEFF4] rounded-[12px] shadow-sm bg-white"
-                  >
-                    {selectedTypeOfEducation || `${t("LangOfEducation")}`}
-                    <svg
-                      className={`w-5 h-5 transform duration-200 ${
-                        openTypeOfEducation ? "rotate-180" : ""
-                      }`}
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M19 9l-7 7-7-7"
-                      />
-                    </svg>
-                  </div>
-
-                  {openTypeOfEducation && (
-                    <ul className="absolute left-0 mt-2 w-full border border-gray-300 bg-white shadow-md rounded-lg z-10">
-                      {educationTypes.map((type) => (
-                        <li
-                          key={type}
-                          onClick={() => {
-                            setSelectedTypeOfEducation(type);
-                            setOpenTypeOfEducation(false);
-                          }}
-                          className={`px-4 py-2 cursor-pointer hover:bg-gray-100 ${
-                            selectedTypeOfEducation === type ? "font-bold" : ""
-                          }`}
-                        >
-                          {type}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-
-                <UserAgreement />
-
-                <button
-                  disabled={!isFormValid}
-                  className={` ${
-                    isFormValid
-                      ? "bg-[#5D87FF] hover:bg-[#4570EA] text-white"
-                      : "bg-gray-400 cursor-not-allowed text-white"
-                  } transition-all duration-300  py-[8px] px-[16px] w-full rounded-[4px]`}
+              <div className="relative w-full">
+                {/* Tanlangan ta'lim turi yoki default "Ta'lim turi" */}
+                <div
+                  onClick={() => setOpenTypeOfEducation(!openTypeOfEducation)}
+                  className="w-full flex items-center justify-between cursor-pointer px-[16px] py-[10px] border border-[#EAEFF4] rounded-[12px] shadow-sm bg-white"
                 >
-                  {t("enter")}
-                </button>
-              </form>
-            ) : isExpired ? (
-              <div className="text-center">
-                <h1 className="text-red-500">
-                  Ro&apos;yxatdan o&apos;tish yakunlangan!
-                </h1>
+                  {selectedTypeOfEducation || `${t("LangOfEducation")}`}
+                  <svg
+                    className={`w-5 h-5 transform duration-200 ${
+                      openTypeOfEducation ? "rotate-180" : ""
+                    }`}
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </div>
+
+                {openTypeOfEducation && (
+                  <ul className="absolute left-0 mt-2 w-full border border-gray-300 bg-white shadow-md rounded-lg z-10">
+                    {educationTypes.map((type) => (
+                      <li
+                        key={type}
+                        onClick={() => {
+                          setSelectedTypeOfEducation(type);
+                          setOpenTypeOfEducation(false);
+                        }}
+                        className={`px-4 py-2 cursor-pointer hover:bg-gray-100 ${
+                          selectedTypeOfEducation === type ? "font-bold" : ""
+                        }`}
+                      >
+                        {type}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
-            ) : (
-              <div className="text-center space-y-[20px]">
-                <p className="text-center text-red-500">
-                  Ro&apos;yxatdan o&apos;ta olmaysiz!!!
-                </p>
-                <div className="flex text-gray-600 text-[15px]">
-                  <p>
-                    Siz{" "}
-                    <span className="font-semibold">
-                      {" "}
-                      {dayjs(get(registerDate, "data[0].start_date")).format(
-                        "DD.MM.YYYY"
-                      )}
-                    </span>{" "}
-                    dan{" "}
-                    <span className="font-semibold">
-                      {" "}
-                      {dayjs(get(registerDate, "data[0].end_date")).format(
-                        "DD.MM.YYYY"
-                      )}
-                    </span>{" "}
-                    gacha ro&apos;yxatdan o&apos;tishingiz mumkin
-                  </p>
-                </div>{" "}
-              </div>
-            )}
+
+              <UserAgreement />
+
+              <button
+                disabled={!isFormValid}
+                className={` ${
+                  isFormValid
+                    ? "bg-[#5D87FF] hover:bg-[#4570EA] text-white"
+                    : "bg-gray-400 cursor-not-allowed text-white"
+                } transition-all duration-300  py-[8px] px-[16px] w-full rounded-[4px]`}
+              >
+                {t("enter")}
+              </button>
+            </form>
           </div>
         </div>
       </div>

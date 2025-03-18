@@ -603,7 +603,7 @@ const Home = () => {
             {isLoadingFAQs || isFetchingFAQS ? (
               <ContentLoader />
             ) : (
-              get(faqsData, "data").map((faq, index) => (
+              get(faqsData, "data")?.map((faq, index) => (
                 <div key={index} className="border-b border-gray-300">
                   <button
                     className="w-full flex justify-between items-center py-[25px] text-left text-base md:text-lg lg:text-[22px] font-semibold hover:bg-gray-100 transition-all duration-300"

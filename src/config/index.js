@@ -1,4 +1,4 @@
 export const config = {
-  API_URL: "https://test.iq-math.uz",
+  API_URL: "https://backend.iq-math.uz/",
   DEFAULT_APP_LANG: "uz",
 };
