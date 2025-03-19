@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import React from "react";
 
-const ButtonCellRenderer = ({ value, data }) => {
+const ButtonCellRenderer = ({ value, data, url }) => {
   const router = useRouter();
   return (
     <button
@@ -10,7 +10,7 @@ const ButtonCellRenderer = ({ value, data }) => {
           ? "bg-[#EDEDF2] hover:bg-[#dadada] !text-black"
           : "bg-blue-500 hover:bg-blue-600 text-white"
       }`}
-      onClick={() => router.push(`${data?.id}`)}
+      onClick={() => router.push(`${url}${data?.id}`)}
     >
       {value}
     </button>

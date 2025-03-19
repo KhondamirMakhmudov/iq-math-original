@@ -86,7 +86,10 @@ const Index = () => {
       headerName: "Действие",
       field: "progress",
       cellRenderer: ({ value }) => (
-        <ButtonCellRenderer value={value === 0 ? "Начать" : "Продолжить"} />
+        <ButtonCellRenderer
+          url={"/dashboard/student/individual/"}
+          value={value === 0 ? "Начать" : "Продолжить"}
+        />
       ),
     },
   ];

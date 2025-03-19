@@ -229,14 +229,14 @@ const Home = () => {
                   <h1 className="text-2xl font-medium mb-5">{t("welcome")}!</h1>
                   <div className="flex flex-col sm:flex-row gap-3">
                     <button
-                      onClick={() => router.push("/dashboard")}
+                      onClick={() => router.push("/dashboard/student")}
                       className="bg-[#5D87FF] hover:bg-[#4570EA] py-3  w-1/2 text-white rounded-md transition-all"
                     >
                       {t("enter")}
                     </button>
                     <button
                       onClick={handleLogout}
-                      className="bg-[#EDEDF2] hover:bg-gray-200 hover:bg-[#EDEDF2] text-black py-2 sm:py-[13px] w-1/2 rounded-[10px] transition-all duration-300"
+                      className="bg-[#EDEDF2]  hover:bg-[#EDEDF2] text-black py-2 sm:py-[13px] w-1/2 rounded-[10px] transition-all duration-300"
                     >
                       {t("left")}
                     </button>
