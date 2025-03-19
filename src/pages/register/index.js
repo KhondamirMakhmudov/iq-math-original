@@ -62,11 +62,19 @@ const Register = () => {
 
   const educationTypes = ["Русский язык", "O'zbek tili"];
 
+  const { data: schoolClasses, isLoading: isLoadingSchoolClasses } =
+    useGetQuery({
+      key: KEYS.schoolClasses,
+      url: URLS.schoolClasses,
+    });
+
+  console.log(schoolClasses);
+
   const filteredCourses =
     selectedOption === t("litsey")
       ? optionsCourse.filter((course) => [1, 2, 5].includes(course.id))
       : selectedOption === t("school")
-      ? optionsCourse.filter((course) => [3, 4, 5].includes(course.id))
+      ? get(schoolClasses, "data", [])
       : [];
 
   // litsey yoki maktabni tanlash
