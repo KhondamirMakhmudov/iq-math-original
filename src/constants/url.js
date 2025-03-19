@@ -1,7 +1,7 @@
 export const URLS = {
   login: "/api/v1/student/login/",
   register: "api/v1/auth/register/",
-  studentProfile: "/api/v1/student/profile/",
+  studentProfile: "/api/v1/auth/profile/",
   olimpiadaQuizList: "/api/v1/quiz/sciences/list/",
   quizTest: "/api/v1/quiz/quizzes/",
   submitAnswers: "/api/v1/quiz/submit-quiz-result/",

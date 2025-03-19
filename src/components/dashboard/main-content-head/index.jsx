@@ -175,7 +175,10 @@ const MainContentHead = ({ toggleSidebar, title, handleTab, tab }) => {
         </div>
 
         <div className={"relative flex items-center gap-x-[16px]"}>
-          <div className="flex gap-x-[8px] items-center py-[7px] px-[12px] border border-[#E9E9E9] rounded-[12px]">
+          <div
+            onClick={() => router.push("/dashboard/student/coins")}
+            className="flex gap-x-[8px] items-center py-[7px] cursor-pointer px-[12px] border border-[#E9E9E9] rounded-[12px]"
+          >
             <Image
               src={"/icons/coins-logo.svg"}
               alt="coins-logo"
