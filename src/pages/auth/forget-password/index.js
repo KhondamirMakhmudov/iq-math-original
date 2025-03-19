@@ -83,7 +83,10 @@ const Index = () => {
               </div>
 
               <div className="flex gap-x-[16px]">
-                <button className="bg-[#EDEDF2] hover:bg-[#EDEDF2] text-black py-2 sm:py-[13px] w-1/2 rounded-[10px] transition-all duration-300">
+                <button
+                  onClick={() => router.back()}
+                  className="bg-[#EDEDF2] hover:bg-[#EDEDF2] text-black py-2 sm:py-[13px] w-1/2 rounded-[10px] transition-all duration-300"
+                >
                   {t("back")}
                 </button>
                 <button className="bg-[#5D87FF] hover:bg-[#4570EA] text-white py-2 sm:py-3 w-1/2 rounded-md transition-all duration-300">
