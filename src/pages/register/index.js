@@ -70,18 +70,13 @@ const Register = () => {
 
   console.log(schoolClasses);
 
-  const filteredCourses =
-    selectedOption === t("litsey")
-      ? optionsCourse.filter((course) => [1, 2, 5].includes(course.id))
-      : selectedOption === t("school")
-      ? get(schoolClasses, "data", [])
-      : [];
+  const filteredCourses = get(schoolClasses, "data", []);
 
   // litsey yoki maktabni tanlash
-  const handleOptionSelect = (option) => {
-    setSelectedOption(option);
-    setDropdownOpen(false);
-  };
+  // const handleOptionSelect = (option) => {
+  //   setSelectedOption(option);
+  //   setDropdownOpen(false);
+  // };
   // kursni tanlash
   const handleCourseSelect = (course) => {
     setSelectedOptionCourse(course.name);
@@ -182,9 +177,7 @@ const Register = () => {
     selectedRegionName &&
     selectedDistrictName &&
     selectedTypeOfEducation &&
-    selectedOption &&
     selectedOptionCourse &&
-    selectedAcademicLyseums &&
     date;
 
   const onSubmit = ({
@@ -623,7 +616,7 @@ const Register = () => {
               </div>
 
               {/* Ta'lim dargohi */}
-              <div className="relative text-[#2A3547] cursor-pointer">
+              {/* <div className="relative text-[#2A3547] cursor-pointer">
                 <div
                   onClick={() => setDropdownOpen((prev) => !prev)}
                   className="w-full  px-[16px] py-[10px] border border-[#EAEFF4] text-[#2A3547] rounded-[12px] bg-white focus:outline-none flex items-center justify-between"
@@ -660,9 +653,9 @@ const Register = () => {
                     ))}
                   </ul>
                 )}
-              </div>
+              </div> */}
 
-              <div>
+              {/* <div>
                 {selectedOption === `${t("school")}` ? (
                   <input
                     type="text"
@@ -729,7 +722,63 @@ const Register = () => {
                 ) : (
                   ""
                 )}
-              </div>
+              </div> */}
+
+              <input
+                type="text"
+                placeholder={`${t("schoolNumber")}`}
+                {...register("academy_or_school_name", {
+                  required: true,
+                })}
+                className="border border-[#EAEFF4] bg-white text-[#2A3547] rounded-[12px] w-full px-[16px] py-[10px]"
+              />
+
+              <motion.div
+                initial={{ opacity: 0, translateY: "30px" }}
+                animate={{ opacity: 1, translateY: "0px" }}
+                transition={{ duration: 0.3 }}
+                className="relative text-[#2A3547] cursor-pointer"
+              >
+                <div
+                  onClick={() => setDropdownOpenCourse((prev) => !prev)}
+                  className="w-full text-left px-[16px] py-[10px] border border-[#EAEFF4] rounded-[12px] bg-white focus:outline-none flex items-center justify-between"
+                >
+                  <span>
+                    {selectedOptionCourse || `${t("chooseTypeOfClass")}`}
+                  </span>
+                  <svg
+                    className={`w-5 h-5 transform ${
+                      dropdownOpenCourse ? "rotate-180" : ""
+                    }`}
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </div>
+
+                {/* Dropdown options */}
+                {dropdownOpenCourse && (
+                  <ul className="absolute w-full -top-[90px] bg-white border border-gray-300 rounded-md shadow-md z-50">
+                    {filteredCourses.map((option, index) => (
+                      <li
+                        key={index}
+                        className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                        onClick={() => handleCourseSelect(option)}
+                      >
+                        {option.name}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </motion.div>
 
               {(selectedOption === `${t("litsey")}` &&
                 selectedAcademicLyseums) ||

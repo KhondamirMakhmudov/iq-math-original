@@ -58,7 +58,7 @@ const Home = () => {
     });
 
     if (result?.error) {
-      toast.error("Invalid credentials");
+      toast.error(result?.error);
     } else {
       toast.success("Logged in successfully");
       router.push("/dashboard/student");
