@@ -14,12 +14,13 @@ export default NextAuth({
         try {
           const { phone, password, sms_code = null } = credentials;
           const formData = new FormData();
-          let url = "https://backend.iq-math.uz/api/v1/auth/login/";
+          let url = "https://backend.iq-math.uz/api/v1/auth/student/login/";
 
           if (sms_code) {
             formData.append("phone", phone);
             formData.append("sms_code", sms_code);
-            url = "https://backend.iq-math.uz/api/v1/auth/register-verify-sms/";
+            url =
+              "https://backend.iq-math.uz/api/v1/auth/student/register-verify-sms/";
           } else {
             formData.append("phone", phone);
             formData.append("password", password);
