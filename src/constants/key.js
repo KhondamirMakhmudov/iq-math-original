@@ -19,4 +19,5 @@ export const KEYS = {
   beforeReminder: "beforeReminder",
   afterReminder: "afterReminder",
   schoolClasses: "schoolClasses",
+  studentSubjects: "studentSubjects",
 };

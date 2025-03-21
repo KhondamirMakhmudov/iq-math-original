@@ -6,6 +6,9 @@ const nextConfig = {
 
     NEXTAUTH_SECRET: "",
   },
+  images: {
+    domains: ["backend.iq-math.uz"], // Tashqi rasm domenini qo‘shamiz
+  },
   // permanently
 
   // async redirects() {

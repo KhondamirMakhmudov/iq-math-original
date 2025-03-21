@@ -98,7 +98,11 @@ const Index = () => {
                   <ProfileDetails
                     detailIcon={"education"}
                     title={"Учреждение"}
-                    desc={get(studentProfile, "data.academy_or_school", "")}
+                    desc={`${get(
+                      studentProfile,
+                      "data.academy_or_school_name",
+                      ""
+                    )}-maktab`}
                   />
                 </li>
 
@@ -136,7 +140,7 @@ const Index = () => {
                   alt={`education`}
                   width={71}
                   height={71}
-                  className="absolute right-0 top-9 right-9 lg:block hidden"
+                  className="absolute  top-9 right-9 lg:block hidden"
                 />
                 <p className="text-[28px] font-extrabold">6,825</p>
                 <div className="space-y-[4px]">

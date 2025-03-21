@@ -63,18 +63,18 @@ const DashboardNav = () => {
               <li
                 onClick={() => {
                   handleTab("main");
-                  router.push("/dashboard/student");
+                  router.push("/dashboard/student/subjects");
                 }}
                 className="cursor-pointer"
               >
                 <div
                   className={`flex gap-x-[12px] items-center py-[8px] px-[12px] rounded-[8px] active:scale-90 scale-100 transition-all duration-300 ${
-                    router.pathname === "/dashboard/student"
+                    router.pathname === "/dashboard/student/subjects"
                       ? "bg-[#5D87FF] text-white"
                       : "text-[#5A6A85] dark:bg-[#202936] hover:bg-[#ECF2FF] dark:hover:bg-[#252B48] dark:text-white"
                   }`}
                 >
-                  {router.pathname === "/dashboard/student" ? (
+                  {router.pathname === "/dashboard/student/subjects" ? (
                     <Image
                       src={"/icons/chevron-down.svg"}
                       alt="chevron-down"

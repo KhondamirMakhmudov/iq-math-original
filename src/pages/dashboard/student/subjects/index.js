@@ -1,0 +1,75 @@
+import Dashboard from "@/components/dashboard";
+import { useSession } from "next-auth/react";
+import { KEYS } from "@/constants/key";
+import { URLS } from "@/constants/url";
+import { get } from "lodash";
+import useGetQuery from "@/hooks/api/useGetQuery";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import Image from "next/image";
+import { config } from "@/config";
+import { useRouter } from "next/router";
+
+const Index = () => {
+  const router = useRouter();
+
+  const { data: session } = useSession();
+  const {
+    data: studentSubjects,
+    isLoading,
+    isFetching,
+  } = useGetQuery({
+    key: KEYS.studentSubjects,
+    url: URLS.studentSubjects,
+    headers: {
+      Authorization: `Bearer ${session?.accessToken}`,
+    },
+    enabled: !!session?.accessToken,
+  });
+  return (
+    <Dashboard headerTitle={"Предметы"}>
+      <Swiper
+        spaceBetween={24}
+        navigation={true}
+        modules={[Navigation]}
+        breakpoints={{
+          0: { slidesPerView: 1 },
+          768: { slidesPerView: 2 },
+          1024: { slidesPerView: 3 },
+          1440: { slidesPerView: 4 },
+        }}
+        loop={true}
+        className="present-swiper"
+      >
+        {get(studentSubjects, "data", []).map((item, index) => (
+          <SwiperSlide key={index}>
+            <div
+              className="space-y-[12px] w-[95px] cursor-pointer"
+              onClick={() =>
+                router.push(`/dashboard/student/subjects/${get(item, "id")}`)
+              }
+            >
+              <div className="rounded-[12px]">
+                <Image
+                  src={`${config.API_URL}${get(item, "image")}`}
+                  alt="math"
+                  width={95}
+                  height={124}
+                  className="rouned-[12px] shadow-md"
+                />
+              </div>
+
+              <p className="text-[15px] font-medium text-center">
+                {get(item, "name")}
+              </p>
+            </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </Dashboard>
+  );
+};
+
+export default Index;

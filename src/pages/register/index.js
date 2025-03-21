@@ -21,6 +21,7 @@ import { get } from "lodash";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import dayjs from "dayjs";
+import DropdownArrow from "@/components/icons/dropdownArrow";
 const Register = () => {
   const { t, i18n } = useTranslation();
   const [date, setDate] = useState("");
@@ -413,22 +414,7 @@ const Register = () => {
                   <span>
                     {selectedDocument || `${t("selectTypeOfPassport")}`}
                   </span>
-                  <svg
-                    className={`w-5 h-5 transform ${
-                      dropdownselectedDocument ? "rotate-180" : ""
-                    }`}
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
+                  <DropdownArrow isOpen={dropdownselectedDocument} />
                 </div>
 
                 {dropdownselectedDocument && (
@@ -521,22 +507,7 @@ const Register = () => {
                     className="w-full  border border-[#EAEFF4] px-[16px] py-[10px] rounded-[12px] bg-white cursor-pointer flex justify-between items-center"
                   >
                     <p className="text-[#2A3547]">{selectedRegionName}</p>
-                    <svg
-                      className={`w-5 h-5 transform duration-200 ${
-                        regionDropdownOpen ? "rotate-180" : ""
-                      }`}
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M19 9l-7 7-7-7"
-                      />
-                    </svg>
+                    <DropdownArrow isOpen={regionDropdownOpen} />
                   </div>
                   {regionDropdownOpen && (
                     <div className="absolute z-50 -top-[410px] mt-1 w-full bg-white border h-[400px] overflow-y-scroll rounded-[12px] shadow-md">
