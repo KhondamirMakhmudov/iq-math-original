@@ -46,7 +46,7 @@ const Index = () => {
         {get(studentSubjects, "data", []).map((item, index) => (
           <SwiperSlide key={index}>
             <div
-              className="space-y-[12px] w-[95px] cursor-pointer"
+              className="space-y-[12px] w-[95px] cursor-pointer group"
               onClick={() =>
                 router.push(`/dashboard/student/subjects/${get(item, "id")}`)
               }
@@ -61,7 +61,7 @@ const Index = () => {
                 />
               </div>
 
-              <p className="text-[15px] font-medium text-center">
+              <p className="text-[15px] font-medium text-center group-hover:text-[#007AFF] transition-all duration-300">
                 {get(item, "name")}
               </p>
             </div>
