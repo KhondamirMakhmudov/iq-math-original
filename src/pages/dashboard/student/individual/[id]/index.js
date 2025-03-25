@@ -125,7 +125,13 @@ const Index = () => {
               Смотреть
             </Button>
 
-            <Button px="px-[16px]" py="py-[11px]">
+            <Button
+              px="px-[16px]"
+              py="py-[11px]"
+              onclick={() =>
+                router.push("/dashboard/student/individual/undefined/1")
+              }
+            >
               Пройти тест
             </Button>
           </div>

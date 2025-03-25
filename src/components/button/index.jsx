@@ -1,20 +1,22 @@
 import clsx from "clsx";
 
 const Button = ({
-  px = "px-[20px]", // px-5, px-6 kabi Tailwind sinflari beriladi
-  py = "py-[13px]", // py-3, py-4 kabi Tailwind sinflari beriladi
-  children,
+  px = "px-[20px]",
+  py = "py-[13px]",
   disabled = false,
   classname,
   rounded = "rounded-[10px]",
-  border, // rounded-md, rounded-xl kabi Tailwind sinflari beriladi
+  border,
+  onclick,
+  children,
 }) => {
   return (
     <button
+      onClick={onclick}
       disabled={disabled}
       className={clsx(
         "font-medium",
-        px, // Tailwind sinflari sifatida qo‘shiladi
+        px,
         py,
         rounded,
         border,

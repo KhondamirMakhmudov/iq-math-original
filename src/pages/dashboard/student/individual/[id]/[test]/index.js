@@ -1,10 +1,34 @@
+"use client";
 import { useRouter } from "next/router";
 import { questions } from "@/dummy-data";
 import { useState } from "react";
 import Button from "@/components/button";
 import Image from "next/image";
+import { MathJax, MathJaxContext } from "better-react-mathjax";
+import InfoCircleIcon from "@/components/icons/info-circle";
+import WarningModal from "@/components/modal/warning-modal";
 
-const symbols = [
+const mathSymbols = {
+  "√x": "\\sqrt{x}",
+  "∛": "\\sqrt[3]{}",
+  "√": "\\sqrt{}",
+  π: "\\pi",
+  "¼": "\\frac{1}{4}",
+  "≤": "\\leq",
+  "≥": "\\geq",
+  "<": "<",
+  ">": ">",
+  "∩": "\\cap",
+  "∪": "\\cup",
+  fx: "f_x",
+  "f(x)": "f(x)",
+  "%": "%",
+  "-": "-",
+  "×": "\\times",
+  "÷": "\\div",
+};
+
+const buttons = [
   "√x",
   "4",
   "8",
@@ -12,8 +36,9 @@ const symbols = [
   "≤",
   "π",
   "y",
-  "z",
-  "⌫",
+  "Z",
+  "▦",
+  "-",
   "∛",
   "3",
   "7",
@@ -21,16 +46,19 @@ const symbols = [
   "≥",
   "¼",
   "x",
-  "{",
-  "⌫",
+  "▥",
+  "{}",
+  "×",
   "√",
   "2",
   "6",
   "<",
   "∩",
-  "fₓ",
+  "fx",
   "e",
-  "⌫",
+  "▧",
+  "⦅⦆",
+  "÷",
   "%",
   "1",
   "5",
@@ -38,29 +66,25 @@ const symbols = [
   "∪",
   "f(x)",
   "i",
-  "⌫",
-  "-",
-  "×",
-  "÷",
+  "▤",
+  "XY",
   "+",
 ];
 
 const Index = () => {
   const [selectedQuestion, setSelectedQuestion] = useState(null);
   const router = useRouter();
+  const [showWarning, setShowWarning] = useState(false);
+
+  const handleShowWarning = () => {
+    setShowWarning(true);
+    setTimeout(() => setShowWarning(false), 5000);
+  };
 
   const [input, setInput] = useState("");
 
-  const handleClick = (value) => {
-    setInput((prev) => prev + value);
-  };
-
-  const calculateResult = () => {
-    try {
-      setInput(eval(input).toString()); // Yaxshiroq yechim sifatida "math.js" ishlatish mumkin
-    } catch {
-      setInput("Error");
-    }
+  const handleClick = (btn) => {
+    setInput((prev) => prev + (mathSymbols[btn] || btn));
   };
 
   const clearInput = () => setInput("");
@@ -131,91 +155,93 @@ const Index = () => {
             </div>
           </div>
           {selectedQuestion ? (
-            <div className="space-y-[32px]">
-              <p className="text-black text-[19px] font-medium text-center">
-                {selectedQuestion}
-              </p>
-              <input
-                type="text"
-                className="w-full px-4 py-[16px] text-center border-none rounded-[12px] text-lg bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="..."
-                value={input} // input qiymati ko'rsatiladi
-                readOnly // Foydalanuvchi qo'lda o'zgartira olmaydi
-              />
+            <div className="">
+              <MathJaxContext>
+                <div className="space-y-[32px] p-4">
+                  <p className="text-black text-[19px] font-medium text-center">
+                    {selectedQuestion}
+                  </p>
+
+                  {/* Matematik ifodani ko'rsatish */}
+                  <div className="w-full px-4 py-[16px] text-center border-none rounded-[12px] text-lg bg-gray-100 min-h-[50px] flex items-center justify-center">
+                    <MathJax>{`\\(${input}\\)`}</MathJax>
+                  </div>
+
+                  <div className="flex justify-between">
+                    <div className="flex  items-center relative">
+                      <Button px="px-[16px]" py="py-[11px]">
+                        Проверить
+                      </Button>
+
+                      <Button
+                        px="px-[16px]"
+                        py="py-[11px]"
+                        classname={
+                          "bg-[#EDEDF2] !text-black ml-[12px] mr-[20px]"
+                        }
+                      >
+                        Показать решение
+                      </Button>
+
+                      <div className="p-[6px] mr-[20px] cursor-pointer ">
+                        <button onClick={handleShowWarning}>
+                          <InfoCircleIcon
+                            color={!showWarning ? "#4D555DFF" : "#F97316FF"}
+                          />
+                        </button>
+
+                        {showWarning && (
+                          <WarningModal
+                            classname={
+                              "absolute w-full max-w-[351px] -top-[80px]"
+                            }
+                          >
+                            Чтобы получить кешбек, вам нужно решить задачу c
+                            первого раза, без подсказки
+                          </WarningModal>
+                        )}
+                      </div>
+
+                      <div className="p-[6px] mr-[20px] cursor-pointer">
+                        <Image
+                          src="/icons/calculator.svg"
+                          alt="info"
+                          width={28}
+                          height={28}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="p-[4px]">3 попытки</div>
+                  </div>
+
+                  <div className="bg-[#E9E9E9] w-full h-[1px] p-0"></div>
+
+                  <div className="space-y-[32px] p-4">
+                    <div className="grid grid-cols-10 gap-2">
+                      {buttons.map((btn, i) => (
+                        <button
+                          key={i}
+                          className={`p-3 w-[60px] h-[50px] text-xl font-normal rounded shadow ${
+                            ["-", "×", "÷", "+"].includes(btn)
+                              ? "text-white bg-orange-500 hover:bg-orange-600"
+                              : "text-[#59626B] bg-[#F5F6F8] hover:bg-gray-300"
+                          }`}
+                          onClick={() => handleClick(btn)}
+                        >
+                          <MathJax>{`\\(${
+                            mathSymbols[btn] || btn
+                          }\\)`}</MathJax>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </MathJaxContext>
             </div>
           ) : (
             <div className="p-4 text-gray-500 italic">Savolni tanlang...</div>
           )}
-
-          <div className="mt-10">
-            {/* Tugmalar */}
-            <div className="grid grid-cols-10 gap-2">
-              {[
-                "√x",
-                "4",
-                "8",
-                "9",
-                "≤",
-                "π",
-                "∛",
-                "3",
-                "7",
-                "-",
-                "0",
-
-                "≥",
-                "¼",
-                "√",
-                "2",
-                "6",
-                "<",
-                "∩",
-                "fx",
-                "%",
-                "×",
-                "1",
-                "5",
-                ">",
-                "∪",
-                "f(x)",
-              ].map((btn, i) => (
-                <button
-                  key={i}
-                  className="p-3 w-[50px] h-[50px] text-[#59626B] text-2xl font-semibold rounded shadow bg-[#F5F6F8] hover:bg-gray-300 col-span-1"
-                  onClick={() => handleClick(btn)}
-                >
-                  {btn}
-                </button>
-              ))}
-
-              {/* Amal tugmalari */}
-              {["-", "×", "÷", "+"].map((op, i) => (
-                <button
-                  key={i}
-                  className="p-3 bg-orange-500 text-white rounded shadow hover:bg-orange-600"
-                  onClick={() => handleClick(op)}
-                >
-                  {op}
-                </button>
-              ))}
-            </div>
-
-            {/* Hisoblash va tozalash */}
-            <div className="flex gap-2 mt-4">
-              <button
-                className="flex-1 p-3 bg-red-500 text-white rounded shadow"
-                onClick={clearInput}
-              >
-                C
-              </button>
-              <button
-                className="flex-1 p-3 bg-green-500 text-white rounded shadow"
-                onClick={calculateResult}
-              >
-                =
-              </button>
-            </div>
-          </div>
         </div>
       </div>
     </div>
