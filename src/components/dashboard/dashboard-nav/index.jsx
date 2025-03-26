@@ -17,6 +17,7 @@ import CoinsIcon from "@/components/icons/coins";
 import ChatIcon from "@/components/icons/chat";
 import WalletIcon from "@/components/icons/wallet";
 import Image from "next/image";
+import DiagnosticsIcon from "@/components/icons/diagnostics";
 const DashboardNav = () => {
   const { t } = useTranslation();
   const { theme } = useTheme();
@@ -59,7 +60,7 @@ const DashboardNav = () => {
         <div className="">
           <SidebarTitle>Основное</SidebarTitle>
           <div className="  flex flex-col  justify-between">
-            <ul className="mt-[12px] space-y-[8px] px-[24px]">
+            <ul className="my-[12px] space-y-[8px] px-[24px]">
               <li
                 onClick={() => {
                   handleTab("main");
@@ -145,7 +146,34 @@ const DashboardNav = () => {
                   <p className="text-[15px]">Самостоятельные </p>
                 </div>
               </li>
-              <li></li>
+              <li
+                onClick={() => {
+                  handleTab("diagnostics");
+                  router.push("/dashboard/student/diagnostics");
+                }}
+                className="cursor-pointer"
+              >
+                <div
+                  className={`flex gap-x-[10px] items-center py-[10px] px-[12px] rounded-[8px] active:scale-90 scale-100 transition-all duration-300 ${
+                    router.pathname === "/dashboard/student/diagnostics"
+                      ? "bg-[#5D87FF] text-white"
+                      : "text-[#5A6A85] dark:bg-[#202936] hover:bg-[#ECF2FF] dark:text-white dark:hover:bg-[#252B48]"
+                  }`}
+                >
+                  {router.pathname === "/dashboard/student/diagnostics" ? (
+                    <Image
+                      src={"/icons/chevron-down.svg"}
+                      alt="chevron-down"
+                      width={24}
+                      height={24}
+                    />
+                  ) : (
+                    <DiagnosticsIcon />
+                  )}
+
+                  <p className="text-[15px]">Диагностика </p>
+                </div>
+              </li>
             </ul>
             {/* <button
               onClick={handleLogoutClick}
@@ -296,7 +324,7 @@ const DashboardNav = () => {
             </div>
             <button
               onClick={handleLogoutClick}
-              className=" !text-black py-[9px] mx-[24px]  text-[15px] bg-[#EDEDF2] text-white rounded-md  transform duration-200"
+              className=" text-black py-[9px] mx-[24px]  text-[15px] bg-[#EDEDF2]  rounded-md  transform duration-200"
             >
               {t("logout")}
             </button>
